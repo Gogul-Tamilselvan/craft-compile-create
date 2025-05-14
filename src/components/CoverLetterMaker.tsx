@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { toast } from "sonner";
+import { toast } from "@/components/ui/use-toast";
 import { CopyIcon } from "lucide-react";
 
 const CoverLetterMaker: React.FC = () => {
@@ -33,7 +33,6 @@ Sincerely,
   const generateCoverLetter = () => {
     if (!companyName || !position) {
       toast({
-        title: "Error",
         description: "Please fill in all fields",
         variant: "destructive"
       });
@@ -47,7 +46,6 @@ Sincerely,
     setCoverLetter(updatedLetter);
     
     toast({
-      title: "Success",
       description: "Cover letter generated"
     });
   };
@@ -73,7 +71,6 @@ Sincerely,
     setPosition("");
     
     toast({
-      title: "Info",
       description: "Form has been reset"
     });
   };
@@ -87,14 +84,12 @@ Sincerely,
     navigator.clipboard.writeText(textareaRef.current.value)
       .then(() => {
         toast({
-          title: "Success",
           description: "Cover letter copied to clipboard"
         });
       })
       .catch((err) => {
         console.error('Failed to copy: ', err);
         toast({
-          title: "Error",
           description: "Failed to copy to clipboard",
           variant: "destructive"
         });
