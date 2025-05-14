@@ -1,9 +1,8 @@
-
 import React, { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { toast } from "sonner";
+import { toast } from "@/components/ui/use-toast";
 import { PlusIcon, TrashIcon, DownloadIcon, UploadIcon } from "lucide-react";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
@@ -46,41 +45,42 @@ interface ResumeData {
 const ResumeMaker: React.FC = () => {
   const [resumeData, setResumeData] = useState<ResumeData>({
     personalInfo: {
-      name: "John Doe",
-      email: "john.doe@example.com",
-      phone: "(555) 123-4567",
-      address: "123 Main St, Anytown, USA",
+      name: "",
+      email: "",
+      phone: "",
+      address: "",
     },
-    objective: "Dedicated professional seeking a position where I can utilize my skills and experience to contribute to company growth.",
+    objective: "",
     education: [
       {
         id: "edu1",
-        institution: "University of Example",
-        degree: "Bachelor of Science in Computer Science",
-        year: "2018-2022",
+        institution: "",
+        degree: "",
+        year: "",
       },
     ],
     experience: [
       {
         id: "exp1",
-        company: "Tech Solutions Inc.",
-        position: "Software Developer",
-        duration: "2022-Present",
-        description: "Developed and maintained web applications using React, Node.js, and MongoDB.",
+        company: "",
+        position: "",
+        duration: "",
+        description: "",
       },
     ],
-    skills: "JavaScript, React, TypeScript, Node.js, HTML/CSS, Git, Agile, Problem Solving",
+    skills: "",
     projects: [
       {
         id: "proj1",
-        title: "E-commerce Platform",
-        description: "Built a full-stack e-commerce platform with user authentication, product management, and payment processing.",
+        title: "",
+        description: "",
       },
     ],
   });
   
   const resumeRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isExporting, setIsExporting] = useState(false);
   
   const updatePersonalInfo = (field: keyof typeof resumeData.personalInfo, value: string) => {
     setResumeData({
@@ -206,31 +206,58 @@ const ResumeMaker: React.FC = () => {
     if (!resumeRef.current) return;
     
     try {
-      toast.info("Preparing PDF...");
-      
-      const canvas = await html2canvas(resumeRef.current, {
-        scale: 2,
-        useCORS: true,
-        logging: false,
+      setIsExporting(true);
+      toast({
+        title: "Preparing PDF",
+        description: "Please wait while your resume is being generated...",
       });
       
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF({
-        orientation: "portrait",
-        unit: "mm",
-        format: "a4",
-      });
-      
-      const imgWidth = 210;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      
-      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-      pdf.save("resume.pdf");
-      
-      toast.success("PDF downloaded successfully");
+      // Use a timeout to allow the UI to update before starting PDF generation
+      setTimeout(async () => {
+        try {
+          const canvas = await html2canvas(resumeRef.current!, {
+            scale: 2,
+            useCORS: true,
+            logging: false,
+            allowTaint: true,
+          });
+          
+          const imgData = canvas.toDataURL("image/png");
+          const pdf = new jsPDF({
+            orientation: "portrait",
+            unit: "mm",
+            format: "a4",
+          });
+          
+          const imgWidth = 210;
+          const imgHeight = (canvas.height * imgWidth) / canvas.width;
+          
+          pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+          pdf.save("resume.pdf");
+          
+          toast({
+            title: "Success",
+            description: "PDF downloaded successfully",
+          });
+        } catch (error) {
+          console.error("Error generating PDF:", error);
+          toast({
+            title: "Error",
+            description: "Failed to generate PDF",
+            variant: "destructive",
+          });
+        } finally {
+          setIsExporting(false);
+        }
+      }, 100);
     } catch (error) {
       console.error("Error generating PDF:", error);
-      toast.error("Failed to generate PDF");
+      toast({
+        title: "Error",
+        description: "Failed to generate PDF",
+        variant: "destructive",
+      });
+      setIsExporting(false);
     }
   };
   
@@ -277,13 +304,18 @@ const ResumeMaker: React.FC = () => {
       <div className="flex flex-wrap gap-4 items-center justify-between">
         <h2 className="text-2xl font-bold text-gray-800">Resume Maker</h2>
         <div className="flex flex-wrap gap-2">
-          <Button variant="outline" size="sm" onClick={handleImport}>
+          <Button variant="outline" size="sm" onClick={handleImport} disabled={isExporting}>
             <UploadIcon className="w-4 h-4 mr-2" />
             Import JSON
           </Button>
-          <Button variant="outline" size="sm" onClick={handleDownload}>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={handleDownload} 
+            disabled={isExporting}
+          >
             <DownloadIcon className="w-4 h-4 mr-2" />
-            Export PDF
+            {isExporting ? "Exporting..." : "Export PDF"}
           </Button>
           <input
             type="file"
