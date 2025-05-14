@@ -18,6 +18,7 @@ const TableEditor: React.FC = () => {
       ["Data 4", "Data 5", "Data 6"],
     ],
   });
+  const [isPrinting, setIsPrinting] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const tableRef = useRef<HTMLDivElement>(null);
@@ -95,80 +96,92 @@ const TableEditor: React.FC = () => {
     event.target.value = "";
   };
 
-  const handlePrint = () => {
-    const printWindow = window.open('', '_blank');
-    if (!printWindow) {
-      toast.error("Pop-up blocked. Please allow pop-ups for printing.");
-      return;
-    }
-
-    const tableStyles = `
-      <style>
-        @page {
-          size: landscape;
-          margin: 1cm;
+  const handlePrint = async () => {
+    setIsPrinting(true);
+    
+    // Delay to ensure the loading state is shown
+    setTimeout(async () => {
+      try {
+        const tableHTML = `
+          <!DOCTYPE html>
+          <html lang="en">
+            <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Table Print</title>
+              <style>
+                @page {
+                  size: landscape;
+                  margin: 1cm;
+                }
+                body {
+                  font-family: Arial, sans-serif;
+                }
+                table {
+                  width: 100%;
+                  border-collapse: collapse;
+                  margin-bottom: 20px;
+                }
+                th, td {
+                  border: 1px solid #ddd;
+                  padding: 8px;
+                  text-align: left;
+                }
+                th {
+                  background-color: #f2f2f2;
+                  position: sticky;
+                  top: 0;
+                }
+                tr:nth-child(even) {
+                  background-color: #f9f9f9;
+                }
+              </style>
+            </head>
+            <body>
+              <table>
+                <thead>
+                  <tr>
+                    ${tableData.headers.map(header => `<th>${header}</th>`).join('')}
+                  </tr>
+                </thead>
+                <tbody>
+                  ${tableData.rows.map(row => 
+                    `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`
+                  ).join('')}
+                </tbody>
+              </table>
+              <script>
+                window.onload = function() {
+                  setTimeout(() => {
+                    window.print();
+                    setTimeout(() => window.close(), 300);
+                  }, 300);
+                };
+              </script>
+            </body>
+          </html>
+        `;
+      
+        // Create the popup window directly with the HTML content
+        const printWindow = window.open('', '_blank');
+        if (!printWindow) {
+          toast.error("Pop-up blocked. Please allow pop-ups for printing.");
+          setIsPrinting(false);
+          return;
         }
-        body {
-          font-family: Arial, sans-serif;
-        }
-        table {
-          width: 100%;
-          border-collapse: collapse;
-          margin-bottom: 20px;
-        }
-        th, td {
-          border: 1px solid #ddd;
-          padding: 8px;
-          text-align: left;
-        }
-        th {
-          background-color: #f2f2f2;
-          position: sticky;
-          top: 0;
-        }
-        tr:nth-child(even) {
-          background-color: #f9f9f9;
-        }
-      </style>
-    `;
-
-    const tableHTML = `
-      <!DOCTYPE html>
-      <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Table Print</title>
-          ${tableStyles}
-        </head>
-        <body>
-          <table>
-            <thead>
-              <tr>
-                ${tableData.headers.map(header => `<th>${header}</th>`).join('')}
-              </tr>
-            </thead>
-            <tbody>
-              ${tableData.rows.map(row => 
-                `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`
-              ).join('')}
-            </tbody>
-          </table>
-          <script>
-            window.onload = function() {
-              setTimeout(() => {
-                window.print();
-                setTimeout(() => window.close(), 500);
-              }, 500);
-            };
-          </script>
-        </body>
-      </html>
-    `;
-
-    printWindow.document.open();
-    printWindow.document.write(tableHTML);
-    printWindow.document.close();
+      
+        printWindow.document.open();
+        printWindow.document.write(tableHTML);
+        printWindow.document.close();
+        
+        toast.success("Table export initiated");
+      } catch (error) {
+        console.error("Export error:", error);
+        toast.error("Error exporting table");
+      } finally {
+        setIsPrinting(false);
+      }
+    }, 100);
   };
 
   return (
@@ -180,9 +193,14 @@ const TableEditor: React.FC = () => {
             <UploadIcon className="w-4 h-4 mr-2" />
             Import JSON
           </Button>
-          <Button variant="outline" size="sm" onClick={handlePrint}>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={handlePrint}
+            disabled={isPrinting}
+          >
             <PrinterIcon className="w-4 h-4 mr-2" />
-            Print
+            {isPrinting ? "Exporting..." : "Print"}
           </Button>
           <input
             type="file"

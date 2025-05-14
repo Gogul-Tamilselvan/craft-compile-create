@@ -1,9 +1,9 @@
 
 import React from "react";
-import { TableIcon, FileTextIcon, FilesIcon } from "lucide-react";
+import { TableIcon, FileTextIcon, FilesIcon, FileEditIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type ModuleType = "table" | "resume" | "merger";
+type ModuleType = "table" | "resume" | "merger" | "cover-letter";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -20,6 +20,7 @@ const Layout: React.FC<LayoutProps> = ({
     { id: "table", name: "Table Editor", icon: <TableIcon className="w-5 h-5" /> },
     { id: "resume", name: "Resume Maker", icon: <FileTextIcon className="w-5 h-5" /> },
     { id: "merger", name: "Document Merger", icon: <FilesIcon className="w-5 h-5" /> },
+    { id: "cover-letter", name: "Cover Letter", icon: <FileEditIcon className="w-5 h-5" /> },
   ];
 
   return (
