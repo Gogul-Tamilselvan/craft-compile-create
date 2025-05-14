@@ -11,22 +11,34 @@ import { CopyIcon } from "lucide-react";
 const CoverLetterMaker: React.FC = () => {
   const [companyName, setCompanyName] = useState("");
   const [position, setPosition] = useState("");
-  const [coverLetter, setCoverLetter] = useState(`
-Dear Hiring Team,
+  const [coverLetter, setCoverLetter] = useState(`Dear Hiring Manager,
 
-I am writing to express my strong interest in the [POSITION] position at [COMPANY]. With my background in software development and passion for creating innovative solutions, I am excited about the opportunity to contribute to your team.
+I'm excited to apply for the [Job Title] position at [Company Name]. I'm Gogul Tamilselvan, a web developer with 1 year of experience building scalable, responsive, and user-friendly applications.
 
-Throughout my career, I have developed a comprehensive skill set in full-stack development, with expertise in React, TypeScript, and modern web technologies. I have successfully delivered complex projects that required attention to detail, problem-solving abilities, and effective collaboration with cross-functional teams.
+Currently, I work on enterprise-level university portals, maintaining and enhancing student exam modules for Gurugram University and Chaudhary Charan Singh University. My day-to-day involves working with Java, JSP, Liferay, and PostgreSQL to deliver high-performing, accessible systems used by thousands of students.
 
-What particularly draws me to [COMPANY] is your commitment to creating impactful products and fostering a culture of innovation. I am impressed by your recent achievements in the industry and would be thrilled to be part of a team that values excellence and continuous improvement.
+Alongside my professional role, I've built several personal and freelance projects that reflect both my technical and creative strengths. These include:
 
-I am confident that my technical expertise, combined with my strong communication skills and collaborative approach, would make me a valuable addition to your team. I am eager to contribute to your ongoing projects and help drive your continued success.
+DigitalMoi – a platform that digitizes traditional community savings systems.
 
-Thank you for considering my application. I look forward to the opportunity to discuss how my skills and experiences align with your needs.
+Message Application – a real-time chat app using Firebase and React.
 
-Sincerely,
-[Your Name]
-  `.trim());
+Linkbloom – a link-sharing platform with clean UI and fast performance.
+
+Plus, multiple freelance projects where I handled everything from planning to deployment.
+
+
+Technically, I'm skilled in React, Redux, Node.js, Express.js, REST APIs, and frontend testing with Jest and React Testing Library. I also bring strong design capabilities, with experience in UI design, wireframing, and prototyping using tools like Figma, Photoshop, and Illustrator.
+
+I'm looking for an opportunity where I can contribute my full-stack knowledge and creative thinking while continuing to grow alongside a talented team. I'd love to bring this energy and experience to [Company Name].
+
+Thank you for considering my application. I look forward to the opportunity to connect further.
+
+Warm regards,
+Gogul Tamilselvan. 
+
+Linkedin: https://www.linkedin.com/in/gogul-tamilselvan
+Portfolio: gogultamilselvan.vercel.app`);
   
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   
@@ -40,8 +52,8 @@ Sincerely,
     }
     
     const updatedLetter = coverLetter
-      .replace(/\[COMPANY\]/g, companyName)
-      .replace(/\[POSITION\]/g, position);
+      .replace(/\[Job Title\]/g, position)
+      .replace(/\[Company Name\]/g, companyName);
     
     setCoverLetter(updatedLetter);
     
@@ -51,22 +63,34 @@ Sincerely,
   };
   
   const resetForm = () => {
-    setCoverLetter(`
-Dear Hiring Team,
+    setCoverLetter(`Dear Hiring Manager,
 
-I am writing to express my strong interest in the [POSITION] position at [COMPANY]. With my background in software development and passion for creating innovative solutions, I am excited about the opportunity to contribute to your team.
+I'm excited to apply for the [Job Title] position at [Company Name]. I'm Gogul Tamilselvan, a web developer with 1 year of experience building scalable, responsive, and user-friendly applications.
 
-Throughout my career, I have developed a comprehensive skill set in full-stack development, with expertise in React, TypeScript, and modern web technologies. I have successfully delivered complex projects that required attention to detail, problem-solving abilities, and effective collaboration with cross-functional teams.
+Currently, I work on enterprise-level university portals, maintaining and enhancing student exam modules for Gurugram University and Chaudhary Charan Singh University. My day-to-day involves working with Java, JSP, Liferay, and PostgreSQL to deliver high-performing, accessible systems used by thousands of students.
 
-What particularly draws me to [COMPANY] is your commitment to creating impactful products and fostering a culture of innovation. I am impressed by your recent achievements in the industry and would be thrilled to be part of a team that values excellence and continuous improvement.
+Alongside my professional role, I've built several personal and freelance projects that reflect both my technical and creative strengths. These include:
 
-I am confident that my technical expertise, combined with my strong communication skills and collaborative approach, would make me a valuable addition to your team. I am eager to contribute to your ongoing projects and help drive your continued success.
+DigitalMoi – a platform that digitizes traditional community savings systems.
 
-Thank you for considering my application. I look forward to the opportunity to discuss how my skills and experiences align with your needs.
+Message Application – a real-time chat app using Firebase and React.
 
-Sincerely,
-[Your Name]
-    `.trim());
+Linkbloom – a link-sharing platform with clean UI and fast performance.
+
+Plus, multiple freelance projects where I handled everything from planning to deployment.
+
+
+Technically, I'm skilled in React, Redux, Node.js, Express.js, REST APIs, and frontend testing with Jest and React Testing Library. I also bring strong design capabilities, with experience in UI design, wireframing, and prototyping using tools like Figma, Photoshop, and Illustrator.
+
+I'm looking for an opportunity where I can contribute my full-stack knowledge and creative thinking while continuing to grow alongside a talented team. I'd love to bring this energy and experience to [Company Name].
+
+Thank you for considering my application. I look forward to the opportunity to connect further.
+
+Warm regards,
+Gogul Tamilselvan. 
+
+Linkedin: https://www.linkedin.com/in/gogul-tamilselvan
+Portfolio: gogultamilselvan.vercel.app`);
     setCompanyName("");
     setPosition("");
     
