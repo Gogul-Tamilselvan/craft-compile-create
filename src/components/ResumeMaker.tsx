@@ -284,12 +284,23 @@ const ResumeMaker: React.FC = () => {
           jsonData.projects
         ) {
           setResumeData(jsonData);
-          toast.success("Resume data imported successfully");
+          toast({
+            title: "Success",
+            description: "Resume data imported successfully",
+          });
         } else {
-          toast.error("Invalid JSON format");
+          toast({
+            title: "Error",
+            description: "Invalid JSON format",
+            variant: "destructive",
+          });
         }
       } catch (error) {
-        toast.error("Error parsing JSON file");
+        toast({
+          title: "Error",
+          description: "Error parsing JSON file",
+          variant: "destructive",
+        });
         console.error(error);
       }
     };
