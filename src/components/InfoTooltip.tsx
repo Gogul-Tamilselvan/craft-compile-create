@@ -1,13 +1,12 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 interface InfoTooltipProps {
   content: React.ReactNode;
@@ -15,19 +14,17 @@ interface InfoTooltipProps {
 
 const InfoTooltip: React.FC<InfoTooltipProps> = ({ content }) => {
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button variant="ghost" size="icon" className="h-8 w-8 p-0">
-            <Info className="h-4 w-4" />
-            <span className="sr-only">Info</span>
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent className="max-w-sm">
-          <div className="text-sm">{content}</div>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button variant="ghost" size="icon" className="h-8 w-8 p-0">
+          <Info className="h-4 w-4" />
+          <span className="sr-only">Info</span>
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="max-w-sm">
+        <div className="text-sm">{content}</div>
+      </PopoverContent>
+    </Popover>
   );
 };
 

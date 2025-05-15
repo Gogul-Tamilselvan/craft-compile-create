@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,6 +20,7 @@ const TableEditor: React.FC = () => {
     ],
   });
   const [isPrinting, setIsPrinting] = useState(false);
+  const [columnWidth, setColumnWidth] = useState<number>(40); // Default column width in mm
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const tableRef = useRef<HTMLDivElement>(null);
@@ -123,28 +125,78 @@ const TableEditor: React.FC = () => {
       let y = 20;
       const margin = 10;
       const pageWidth = doc.internal.pageSize.getWidth();
-      const columnWidth = (pageWidth - 2 * margin) / tableData.headers.length;
+      // Use the user-adjustable columnWidth
+      const availableWidth = pageWidth - 2 * margin;
+      const maxColumns = Math.floor(availableWidth / columnWidth);
+      let currentPage = 1;
       
       // Add title
       doc.setFontSize(16);
       doc.text("Table Export", margin, y);
       y += 10;
       
-      // Add headers
-      doc.setFontSize(12);
-      doc.setTextColor(100, 100, 100);
-      tableData.headers.forEach((header, i) => {
-        doc.text(header, margin + i * columnWidth, y);
-      });
+      // Helper function to add a page
+      const addPage = () => {
+        doc.addPage();
+        currentPage++;
+        y = 20;
+        // Add page number
+        doc.setFontSize(10);
+        doc.text(`Page ${currentPage}`, pageWidth - 20, 10);
+        // Reset to default font size
+        doc.setFontSize(12);
+      };
       
-      // Add rows
-      doc.setTextColor(0, 0, 0);
-      tableData.rows.forEach((row) => {
-        y += 10;
-        row.forEach((cell, i) => {
-          doc.text(cell, margin + i * columnWidth, y);
-        });
-      });
+      // Process headers and rows in chunks based on column width
+      const processTable = () => {
+        for (let startCol = 0; startCol < tableData.headers.length; startCol += maxColumns) {
+          const endCol = Math.min(startCol + maxColumns, tableData.headers.length);
+          const currentHeaders = tableData.headers.slice(startCol, endCol);
+          
+          // Add headers
+          doc.setFontSize(12);
+          doc.setTextColor(100, 100, 100);
+          currentHeaders.forEach((header, i) => {
+            doc.text(header, margin + i * columnWidth, y);
+          });
+          
+          y += 10;
+          
+          // Add rows
+          doc.setTextColor(0, 0, 0);
+          tableData.rows.forEach((row, rowIndex) => {
+            // Check if we need a new page
+            if (y > doc.internal.pageSize.getHeight() - 20) {
+              addPage();
+              
+              // Re-add headers on the new page
+              doc.setTextColor(100, 100, 100);
+              currentHeaders.forEach((header, i) => {
+                doc.text(header, margin + i * columnWidth, y);
+              });
+              
+              y += 10;
+              doc.setTextColor(0, 0, 0);
+            }
+            
+            const currentCells = row.slice(startCol, endCol);
+            currentCells.forEach((cell, i) => {
+              // Ensure text doesn't overflow the cell width
+              const cellText = cell.length > 20 ? cell.substring(0, 17) + "..." : cell;
+              doc.text(cellText, margin + i * columnWidth, y);
+            });
+            
+            y += 8; // Space between rows
+          });
+          
+          // If we have more columns to process, add a new page
+          if (endCol < tableData.headers.length) {
+            addPage();
+          }
+        }
+      };
+      
+      processTable();
       
       // Save PDF
       doc.save('table-export.pdf');
@@ -187,6 +239,19 @@ const TableEditor: React.FC = () => {
           <InfoTooltip content={tableJsonFormat} />
         </div>
         <div className="flex flex-wrap gap-2">
+          <div className="flex items-center gap-2 mr-2">
+            <label htmlFor="columnWidth" className="text-sm whitespace-nowrap">Column Width:</label>
+            <Input
+              id="columnWidth"
+              type="number"
+              min={20}
+              max={100}
+              value={columnWidth}
+              onChange={(e) => setColumnWidth(Number(e.target.value))}
+              className="w-20 h-8"
+            />
+            <span className="text-sm">mm</span>
+          </div>
           <Button variant="outline" size="sm" onClick={handleImport}>
             <UploadIcon className="w-4 h-4 mr-2" />
             Import JSON
