@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { DownloadIcon, TrashIcon, ArrowUpIcon, ArrowDownIcon, UploadIcon } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
 import { PDFDocument } from "pdf-lib";
+import InfoTooltip from "./InfoTooltip";
 
 interface DocumentFile {
   id: string;
@@ -214,10 +215,25 @@ const DocumentMerger: React.FC = () => {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
   };
 
+  const documentMergerInfo = (
+    <div>
+      <p className="font-medium mb-1">Supported File Formats:</p>
+      <ul className="list-disc pl-4 text-xs mb-2">
+        <li>PDF (.pdf) - For merging</li>
+        <li>Images (.png, .jpg, .jpeg)</li>
+        <li>Documents (.doc, .docx)</li>
+      </ul>
+      <p className="text-xs">Note: Currently only PDF files can be merged together.</p>
+    </div>
+  );
+
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap gap-4 items-center justify-between">
-        <h2 className="text-2xl font-bold text-gray-800">Document Merger</h2>
+        <div className="flex items-center gap-2">
+          <h2 className="text-2xl font-bold text-gray-800">Document Merger</h2>
+          <InfoTooltip content={documentMergerInfo} />
+        </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm" onClick={handleFileUpload} disabled={merging}>
             <UploadIcon className="w-4 h-4 mr-2" />

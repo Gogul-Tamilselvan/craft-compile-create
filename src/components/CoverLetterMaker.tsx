@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,6 +6,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/use-toast";
 import { CopyIcon } from "lucide-react";
+import InfoTooltip from "./InfoTooltip";
 
 const CoverLetterMaker: React.FC = () => {
   const [companyName, setCompanyName] = useState("");
@@ -120,9 +120,25 @@ Portfolio: gogultamilselvan.vercel.app`);
       });
   };
   
+  const coverLetterInfo = (
+    <div>
+      <p className="font-medium mb-1">How to use:</p>
+      <ol className="list-decimal pl-4 text-xs mb-2">
+        <li>Enter the position and company name</li>
+        <li>Click "Generate" to customize your cover letter</li>
+        <li>The template will replace [Job Title] and [Company Name] with your inputs</li>
+        <li>Edit the generated cover letter as needed</li>
+        <li>Click "Copy to Clipboard" when done</li>
+      </ol>
+    </div>
+  );
+  
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-gray-800">Cover Letter Maker</h2>
+      <div className="flex items-center gap-2">
+        <h2 className="text-2xl font-bold text-gray-800">Cover Letter Maker</h2>
+        <InfoTooltip content={coverLetterInfo} />
+      </div>
       
       <div className="grid md:grid-cols-2 gap-6">
         <Card>

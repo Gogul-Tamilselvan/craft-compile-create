@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PlusIcon, TrashIcon, UploadIcon, PrinterIcon, DownloadIcon } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
+import InfoTooltip from "./InfoTooltip";
 
 interface TableData {
   headers: string[];
@@ -163,10 +164,28 @@ const TableEditor: React.FC = () => {
     }
   };
 
+  const tableJsonFormat = (
+    <div>
+      <p className="font-medium mb-1">Expected JSON Format:</p>
+      <pre className="bg-gray-100 p-2 rounded text-xs overflow-auto">
+{`{
+  "headers": ["Column 1", "Column 2", "Column 3"],
+  "rows": [
+    ["Data 1", "Data 2", "Data 3"],
+    ["Data 4", "Data 5", "Data 6"]
+  ]
+}`}
+      </pre>
+    </div>
+  );
+
   return (
     <div className="space-y-6" ref={tableRef}>
       <div className="flex flex-wrap gap-4 items-center justify-between">
-        <h2 className="text-2xl font-bold text-gray-800">Custom Table Editor</h2>
+        <div className="flex items-center gap-2">
+          <h2 className="text-2xl font-bold text-gray-800">Custom Table Editor</h2>
+          <InfoTooltip content={tableJsonFormat} />
+        </div>
         <div className="flex flex-wrap gap-2">
           <Button variant="outline" size="sm" onClick={handleImport}>
             <UploadIcon className="w-4 h-4 mr-2" />
