@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/use-toast";
-import { PlusIcon, TrashIcon, DownloadIcon, UploadIcon } from "lucide-react";
+import { PlusIcon, TrashIcon, DownloadIcon, UploadIcon, EyeOffIcon, EyeIcon } from "lucide-react";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 
@@ -42,6 +42,14 @@ interface ResumeData {
   projects: Project[];
 }
 
+interface SectionVisibility {
+  objective: boolean;
+  education: boolean;
+  experience: boolean;
+  skills: boolean;
+  projects: boolean;
+}
+
 const ResumeMaker: React.FC = () => {
   const [resumeData, setResumeData] = useState<ResumeData>({
     personalInfo: {
@@ -78,9 +86,26 @@ const ResumeMaker: React.FC = () => {
     ],
   });
   
+  // Add section visibility state
+  const [sectionVisibility, setSectionVisibility] = useState<SectionVisibility>({
+    objective: true,
+    education: true,
+    experience: true,
+    skills: true,
+    projects: true
+  });
+  
   const resumeRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isExporting, setIsExporting] = useState(false);
+  
+  // Toggle section visibility
+  const toggleSectionVisibility = (section: keyof SectionVisibility) => {
+    setSectionVisibility(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
+  };
   
   const updatePersonalInfo = (field: keyof typeof resumeData.personalInfo, value: string) => {
     setResumeData({
@@ -383,25 +408,51 @@ const ResumeMaker: React.FC = () => {
             </div>
           </div>
           
+          {/* Career Objective Section with Toggle */}
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Career Objective</h3>
-            <Textarea
-              className="min-h-[100px]"
-              value={resumeData.objective}
-              onChange={(e) => updateObjective(e.target.value)}
-            />
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-medium text-gray-900">Career Objective</h3>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => toggleSectionVisibility('objective')}
+              >
+                {sectionVisibility.objective ? <EyeOffIcon className="w-4 h-4 mr-1" /> : <EyeIcon className="w-4 h-4 mr-1" />}
+                {sectionVisibility.objective ? "Hide Section" : "Show Section"}
+              </Button>
+            </div>
+            {sectionVisibility.objective && (
+              <Textarea
+                className="min-h-[100px]"
+                value={resumeData.objective}
+                onChange={(e) => updateObjective(e.target.value)}
+              />
+            )}
           </div>
           
+          {/* Education Section with Toggle */}
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-medium text-gray-900">Education</h3>
-              <Button variant="ghost" size="sm" onClick={addEducation}>
-                <PlusIcon className="w-4 h-4 mr-1" />
-                Add Education
-              </Button>
+              <div className="flex gap-2">
+                {sectionVisibility.education && (
+                  <Button variant="ghost" size="sm" onClick={addEducation}>
+                    <PlusIcon className="w-4 h-4 mr-1" />
+                    Add Education
+                  </Button>
+                )}
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={() => toggleSectionVisibility('education')}
+                >
+                  {sectionVisibility.education ? <EyeOffIcon className="w-4 h-4 mr-1" /> : <EyeIcon className="w-4 h-4 mr-1" />}
+                  {sectionVisibility.education ? "Hide Section" : "Show Section"}
+                </Button>
+              </div>
             </div>
             
-            {resumeData.education.map((edu) => (
+            {sectionVisibility.education && resumeData.education.map((edu) => (
               <div key={edu.id} className="p-4 border border-gray-200 rounded-lg mb-4">
                 <div className="flex justify-between items-start mb-3">
                   <h4 className="font-medium">Education Entry</h4>
@@ -447,16 +498,29 @@ const ResumeMaker: React.FC = () => {
             ))}
           </div>
           
+          {/* Work Experience Section with Toggle */}
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-medium text-gray-900">Work Experience</h3>
-              <Button variant="ghost" size="sm" onClick={addExperience}>
-                <PlusIcon className="w-4 h-4 mr-1" />
-                Add Experience
-              </Button>
+              <div className="flex gap-2">
+                {sectionVisibility.experience && (
+                  <Button variant="ghost" size="sm" onClick={addExperience}>
+                    <PlusIcon className="w-4 h-4 mr-1" />
+                    Add Experience
+                  </Button>
+                )}
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={() => toggleSectionVisibility('experience')}
+                >
+                  {sectionVisibility.experience ? <EyeOffIcon className="w-4 h-4 mr-1" /> : <EyeIcon className="w-4 h-4 mr-1" />}
+                  {sectionVisibility.experience ? "Hide Section" : "Show Section"}
+                </Button>
+              </div>
             </div>
             
-            {resumeData.experience.map((exp) => (
+            {sectionVisibility.experience && resumeData.experience.map((exp) => (
               <div key={exp.id} className="p-4 border border-gray-200 rounded-lg mb-4">
                 <div className="flex justify-between items-start mb-3">
                   <h4 className="font-medium">Experience Entry</h4>
@@ -511,26 +575,52 @@ const ResumeMaker: React.FC = () => {
             ))}
           </div>
           
+          {/* Skills Section with Toggle */}
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Skills</h3>
-            <Textarea
-              className="min-h-[100px]"
-              value={resumeData.skills}
-              onChange={(e) => updateSkills(e.target.value)}
-              placeholder="Enter skills separated by commas (e.g. JavaScript, React, CSS)"
-            />
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-medium text-gray-900">Skills</h3>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => toggleSectionVisibility('skills')}
+              >
+                {sectionVisibility.skills ? <EyeOffIcon className="w-4 h-4 mr-1" /> : <EyeIcon className="w-4 h-4 mr-1" />}
+                {sectionVisibility.skills ? "Hide Section" : "Show Section"}
+              </Button>
+            </div>
+            {sectionVisibility.skills && (
+              <Textarea
+                className="min-h-[100px]"
+                value={resumeData.skills}
+                onChange={(e) => updateSkills(e.target.value)}
+                placeholder="Enter skills separated by commas (e.g. JavaScript, React, CSS)"
+              />
+            )}
           </div>
           
+          {/* Projects Section with Toggle */}
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-medium text-gray-900">Projects</h3>
-              <Button variant="ghost" size="sm" onClick={addProject}>
-                <PlusIcon className="w-4 h-4 mr-1" />
-                Add Project
-              </Button>
+              <div className="flex gap-2">
+                {sectionVisibility.projects && (
+                  <Button variant="ghost" size="sm" onClick={addProject}>
+                    <PlusIcon className="w-4 h-4 mr-1" />
+                    Add Project
+                  </Button>
+                )}
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={() => toggleSectionVisibility('projects')}
+                >
+                  {sectionVisibility.projects ? <EyeOffIcon className="w-4 h-4 mr-1" /> : <EyeIcon className="w-4 h-4 mr-1" />}
+                  {sectionVisibility.projects ? "Hide Section" : "Show Section"}
+                </Button>
+              </div>
             </div>
             
-            {resumeData.projects.map((proj) => (
+            {sectionVisibility.projects && resumeData.projects.map((proj) => (
               <div key={proj.id} className="p-4 border border-gray-200 rounded-lg mb-4">
                 <div className="flex justify-between items-start mb-3">
                   <h4 className="font-medium">Project Entry</h4>
@@ -590,63 +680,73 @@ const ResumeMaker: React.FC = () => {
                   </div>
                 </div>
                 
-                {/* Objective */}
-                <div className="mb-4">
-                  <h2 className="text-lg font-semibold text-gray-900 mb-2">Objective</h2>
-                  <p className="text-gray-700">{resumeData.objective}</p>
-                </div>
+                {/* Objective - Only show if visible */}
+                {sectionVisibility.objective && resumeData.objective && (
+                  <div className="mb-4">
+                    <h2 className="text-lg font-semibold text-gray-900 mb-2">Objective</h2>
+                    <p className="text-gray-700">{resumeData.objective}</p>
+                  </div>
+                )}
                 
-                {/* Education */}
-                <div className="mb-4">
-                  <h2 className="text-lg font-semibold text-gray-900 mb-2">Education</h2>
-                  <div className="space-y-3">
-                    {resumeData.education.map((edu) => (
-                      <div key={edu.id}>
-                        <div className="font-medium text-gray-900">{edu.institution}</div>
-                        <div className="flex justify-between text-gray-700">
-                          <div>{edu.degree}</div>
-                          <div>{edu.year}</div>
+                {/* Education - Only show if visible */}
+                {sectionVisibility.education && resumeData.education.length > 0 && (
+                  <div className="mb-4">
+                    <h2 className="text-lg font-semibold text-gray-900 mb-2">Education</h2>
+                    <div className="space-y-3">
+                      {resumeData.education.map((edu) => (
+                        <div key={edu.id}>
+                          <div className="font-medium text-gray-900">{edu.institution}</div>
+                          <div className="flex justify-between text-gray-700">
+                            <div>{edu.degree}</div>
+                            <div>{edu.year}</div>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
                 
-                {/* Experience */}
-                <div className="mb-4">
-                  <h2 className="text-lg font-semibold text-gray-900 mb-2">Work Experience</h2>
-                  <div className="space-y-4">
-                    {resumeData.experience.map((exp) => (
-                      <div key={exp.id}>
-                        <div className="font-medium text-gray-900">{exp.company}</div>
-                        <div className="flex justify-between text-gray-700">
-                          <div>{exp.position}</div>
-                          <div>{exp.duration}</div>
+                {/* Experience - Only show if visible */}
+                {sectionVisibility.experience && resumeData.experience.length > 0 && (
+                  <div className="mb-4">
+                    <h2 className="text-lg font-semibold text-gray-900 mb-2">Work Experience</h2>
+                    <div className="space-y-4">
+                      {resumeData.experience.map((exp) => (
+                        <div key={exp.id}>
+                          <div className="font-medium text-gray-900">{exp.company}</div>
+                          <div className="flex justify-between text-gray-700">
+                            <div>{exp.position}</div>
+                            <div>{exp.duration}</div>
+                          </div>
+                          <p className="text-gray-600 mt-1">{exp.description}</p>
                         </div>
-                        <p className="text-gray-600 mt-1">{exp.description}</p>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
                 
-                {/* Skills */}
-                <div className="mb-4">
-                  <h2 className="text-lg font-semibold text-gray-900 mb-2">Skills</h2>
-                  <p className="text-gray-700">{resumeData.skills}</p>
-                </div>
-                
-                {/* Projects */}
-                <div>
-                  <h2 className="text-lg font-semibold text-gray-900 mb-2">Projects</h2>
-                  <div className="space-y-3">
-                    {resumeData.projects.map((proj) => (
-                      <div key={proj.id}>
-                        <div className="font-medium text-gray-900">{proj.title}</div>
-                        <p className="text-gray-600 mt-1">{proj.description}</p>
-                      </div>
-                    ))}
+                {/* Skills - Only show if visible */}
+                {sectionVisibility.skills && resumeData.skills && (
+                  <div className="mb-4">
+                    <h2 className="text-lg font-semibold text-gray-900 mb-2">Skills</h2>
+                    <p className="text-gray-700">{resumeData.skills}</p>
                   </div>
-                </div>
+                )}
+                
+                {/* Projects - Only show if visible */}
+                {sectionVisibility.projects && resumeData.projects.length > 0 && (
+                  <div>
+                    <h2 className="text-lg font-semibold text-gray-900 mb-2">Projects</h2>
+                    <div className="space-y-3">
+                      {resumeData.projects.map((proj) => (
+                        <div key={proj.id}>
+                          <div className="font-medium text-gray-900">{proj.title}</div>
+                          <p className="text-gray-600 mt-1">{proj.description}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

@@ -2,7 +2,7 @@
 import React, { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { DownloadIcon, TrashIcon, ArrowUpIcon, ArrowDownIcon, UploadIcon } from "lucide-react";
-import { toast } from "sonner";
+import { toast } from "@/components/ui/use-toast";
 import { PDFDocument } from "pdf-lib";
 
 interface DocumentFile {
@@ -118,38 +118,85 @@ const DocumentMerger: React.FC = () => {
 
   const mergeDocuments = async () => {
     if (files.length === 0) {
-      toast.error("Please add files to merge");
+      toast({
+        title: "Error",
+        description: "Please add files to merge",
+        variant: "destructive"
+      });
       return;
     }
     
     if (files.length === 1) {
-      toast.error("Please add at least two files to merge");
+      toast({
+        title: "Error",
+        description: "Please add at least two files to merge",
+        variant: "destructive"
+      });
       return;
     }
     
     setMerging(true);
-    const toastId = toast.loading("Merging documents...");
     
     try {
-      // In a real implementation, this would handle all file types
-      // But for this demo we'll simulate a successful merge
+      // Create a new PDF document
+      const mergedPdf = await PDFDocument.create();
       
-      toast.dismiss(toastId);
-      toast.success("Documents merged successfully");
+      // For PDF files only
+      const pdfFiles = files.filter(file => file.type === "application/pdf");
       
-      // Simulate a download
-      setTimeout(() => {
-        const link = document.createElement("a");
-        link.href = "#";
-        link.download = "merged_document.pdf";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }, 1000);
+      if (pdfFiles.length === 0) {
+        toast({
+          title: "Error",
+          description: "No PDF files to merge. Currently only PDF merging is supported.",
+          variant: "destructive"
+        });
+        setMerging(false);
+        return;
+      }
+      
+      // Process each PDF file
+      for (const file of pdfFiles) {
+        try {
+          // Read file as ArrayBuffer
+          const fileBytes = await file.data.arrayBuffer();
+          
+          // Load PDF document
+          const pdfDoc = await PDFDocument.load(fileBytes);
+          
+          // Copy pages from source document
+          const copiedPages = await mergedPdf.copyPages(pdfDoc, pdfDoc.getPageIndices());
+          
+          // Add copied pages to merged document
+          copiedPages.forEach(page => mergedPdf.addPage(page));
+          
+        } catch (error) {
+          console.error(`Error processing file ${file.name}:`, error);
+        }
+      }
+      
+      // Save the merged PDF
+      const mergedPdfBytes = await mergedPdf.save();
+      
+      // Convert to Blob and create download link
+      const blob = new Blob([mergedPdfBytes], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'merged_document.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      toast({
+        description: "Documents merged successfully"
+      });
     } catch (error) {
       console.error("Error merging documents:", error);
-      toast.dismiss(toastId);
-      toast.error("Failed to merge documents");
+      toast({
+        title: "Error",
+        description: "Failed to merge documents. Please try again.",
+        variant: "destructive"
+      });
     } finally {
       setMerging(false);
     }

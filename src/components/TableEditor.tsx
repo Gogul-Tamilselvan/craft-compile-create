@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { PlusIcon, TrashIcon, UploadIcon, PrinterIcon } from "lucide-react";
-import { toast } from "sonner";
+import { PlusIcon, TrashIcon, UploadIcon, PrinterIcon, DownloadIcon } from "lucide-react";
+import { toast } from "@/components/ui/use-toast";
 
 interface TableData {
   headers: string[];
@@ -99,81 +99,55 @@ const TableEditor: React.FC = () => {
     setIsPrinting(true);
     
     try {
-      const tableHTML = `
-        <!DOCTYPE html>
-        <html lang="en">
-          <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Table Print</title>
-            <style>
-              @page {
-                size: landscape;
-                margin: 1cm;
-              }
-              body {
-                font-family: Arial, sans-serif;
-              }
-              table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-bottom: 20px;
-              }
-              th, td {
-                border: 1px solid #ddd;
-                padding: 8px;
-                text-align: left;
-              }
-              th {
-                background-color: #f2f2f2;
-                position: sticky;
-                top: 0;
-              }
-              tr:nth-child(even) {
-                background-color: #f9f9f9;
-              }
-            </style>
-          </head>
-          <body>
-            <table>
-              <thead>
-                <tr>
-                  ${tableData.headers.map(header => `<th>${header}</th>`).join('')}
-                </tr>
-              </thead>
-              <tbody>
-                ${tableData.rows.map(row => 
-                  `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`
-                ).join('')}
-              </tbody>
-            </table>
-            <script>
-              window.onload = function() {
-                window.print();
-                window.close();
-              };
-            </script>
-          </body>
-        </html>
-      `;
-    
-      // Create the popup window directly with the HTML content
-      const printWindow = window.open('', '_blank');
-      if (!printWindow) {
-        toast.error("Pop-up blocked. Please allow pop-ups for printing.");
-        setIsPrinting(false);
-        return;
-      }
-    
-      printWindow.document.open();
-      printWindow.document.write(tableHTML);
-      printWindow.document.close();
+      // Generate PDF using jsPDF directly instead of popup window
+      const { jsPDF } = await import('jspdf');
+      const doc = new jsPDF({
+        orientation: 'landscape',
+        unit: 'mm',
+        format: 'a4'
+      });
       
-      toast.success("Table exported successfully");
-      setTimeout(() => setIsPrinting(false), 500);
+      // Add table headers
+      let y = 20;
+      const margin = 10;
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const columnWidth = (pageWidth - 2 * margin) / tableData.headers.length;
+      
+      // Add title
+      doc.setFontSize(16);
+      doc.text("Table Export", margin, y);
+      y += 10;
+      
+      // Add headers
+      doc.setFontSize(12);
+      doc.setTextColor(100, 100, 100);
+      tableData.headers.forEach((header, i) => {
+        doc.text(header, margin + i * columnWidth, y);
+      });
+      
+      // Add rows
+      doc.setTextColor(0, 0, 0);
+      tableData.rows.forEach((row) => {
+        y += 10;
+        row.forEach((cell, i) => {
+          doc.text(cell, margin + i * columnWidth, y);
+        });
+      });
+      
+      // Save PDF
+      doc.save('table-export.pdf');
+      
+      toast({
+        description: "Table exported successfully"
+      });
     } catch (error) {
       console.error("Export error:", error);
-      toast.error("Error exporting table");
+      toast({
+        title: "Error",
+        description: "Error exporting table",
+        variant: "destructive"
+      });
+    } finally {
       setIsPrinting(false);
     }
   };
@@ -193,8 +167,8 @@ const TableEditor: React.FC = () => {
             onClick={handlePrint}
             disabled={isPrinting}
           >
-            <PrinterIcon className="w-4 h-4 mr-2" />
-            {isPrinting ? "Exporting..." : "Print"}
+            <DownloadIcon className="w-4 h-4 mr-2" />
+            {isPrinting ? "Exporting..." : "Export PDF"}
           </Button>
           <input
             type="file"
