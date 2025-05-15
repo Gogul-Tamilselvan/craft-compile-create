@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,6 +26,17 @@ interface ColumnSettings {
   visible: boolean;
 }
 
+interface PrintSettings {
+  margins: {
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
+  };
+  orientation: 'portrait' | 'landscape';
+  paperSize: 'a4' | 'letter' | 'legal';
+}
+
 const TableEditor: React.FC = () => {
   const [tableData, setTableData] = useState<TableData>({
     headers: ["Column 1", "Column 2", "Column 3"],
@@ -38,6 +50,16 @@ const TableEditor: React.FC = () => {
   const [columnSettings, setColumnSettings] = useState<ColumnSettings[]>([]);
   const [showSettings, setShowSettings] = useState(false);
   const [tableBorderWidth, setTableBorderWidth] = useState<number>(0.5); // Border width in points
+  const [printSettings, setPrintSettings] = useState<PrintSettings>({
+    margins: {
+      top: 20,
+      right: 10,
+      bottom: 20,
+      left: 10
+    },
+    orientation: 'landscape',
+    paperSize: 'a4'
+  });
   
   const fileInputRef = useRef<HTMLInputElement>(null);
   const tableRef = useRef<HTMLDivElement>(null);
@@ -156,6 +178,33 @@ const TableEditor: React.FC = () => {
     setColumnSettings(newSettings);
   };
 
+  // Update margin settings
+  const updateMargin = (side: keyof PrintSettings['margins'], value: number) => {
+    setPrintSettings(prev => ({
+      ...prev,
+      margins: {
+        ...prev.margins,
+        [side]: value
+      }
+    }));
+  };
+  
+  // Update orientation
+  const setOrientation = (orientation: 'portrait' | 'landscape') => {
+    setPrintSettings(prev => ({
+      ...prev,
+      orientation
+    }));
+  };
+  
+  // Update paper size
+  const setPaperSize = (paperSize: 'a4' | 'letter' | 'legal') => {
+    setPrintSettings(prev => ({
+      ...prev,
+      paperSize
+    }));
+  };
+
   const handlePrint = async () => {
     setIsPrinting(true);
     
@@ -163,9 +212,9 @@ const TableEditor: React.FC = () => {
       // Generate PDF using jsPDF
       const { jsPDF } = await import('jspdf');
       const doc = new jsPDF({
-        orientation: 'landscape',
+        orientation: printSettings.orientation,
         unit: 'mm',
-        format: 'a4'
+        format: printSettings.paperSize
       });
       
       // Get visible columns
@@ -177,9 +226,12 @@ const TableEditor: React.FC = () => {
       })).filter(col => col.visible);
       
       // Add table headers
-      let y = 20;
-      const margin = 10;
+      const { top, right, bottom, left } = printSettings.margins;
+      let y = top;
+      const margin = left;
       const pageWidth = doc.internal.pageSize.getWidth();
+      const pageHeight = doc.internal.pageSize.getHeight();
+      const contentWidth = pageWidth - left - right;
       let currentPage = 1;
       
       // Add title
@@ -194,10 +246,10 @@ const TableEditor: React.FC = () => {
       const addPage = () => {
         doc.addPage();
         currentPage++;
-        y = 20;
+        y = top;
         // Add page number
         doc.setFontSize(10);
-        doc.text(`Page ${currentPage}`, pageWidth - 20, 10);
+        doc.text(`Page ${currentPage}`, pageWidth - right - 20, 10);
         // Reset to default font size
         doc.setFontSize(12);
       };
@@ -205,9 +257,8 @@ const TableEditor: React.FC = () => {
       // Calculate total width of all visible columns
       const totalColWidth = visibleColumns.reduce((sum, col) => sum + col.width, 0);
       
-      // Adjust column widths if total exceeds page width
-      const availableWidth = pageWidth - 2 * margin;
-      const scaleFactor = totalColWidth > availableWidth ? availableWidth / totalColWidth : 1;
+      // Adjust column widths if total exceeds content width
+      const scaleFactor = totalColWidth > contentWidth ? contentWidth / totalColWidth : 1;
       
       // Process the table with visible columns and adjusted widths
       const processTable = () => {
@@ -235,7 +286,7 @@ const TableEditor: React.FC = () => {
         doc.setTextColor(0, 0, 0);
         tableData.rows.forEach((row) => {
           // Check if we need a new page
-          if (y > doc.internal.pageSize.getHeight() - 20) {
+          if (y > pageHeight - bottom) {
             addPage();
             
             // Re-draw headers on the new page
@@ -374,75 +425,179 @@ const TableEditor: React.FC = () => {
         <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
           <h3 className="text-lg font-semibold mb-3">Table Export Settings</h3>
           
-          <div className="mb-4">
-            <label className="block text-sm font-medium mb-1">Table Border Width: {tableBorderWidth.toFixed(1)}pt</label>
-            <Slider 
-              value={[tableBorderWidth]} 
-              min={0.1} 
-              max={2.0} 
-              step={0.1} 
-              onValueChange={(values) => setTableBorderWidth(values[0])} 
-              className="w-full max-w-xs"
-            />
-          </div>
-          
-          <div className="space-y-2">
-            <h4 className="text-md font-medium">Column Settings</h4>
-            <p className="text-sm text-gray-600">Adjust width for individual columns to avoid text overlapping.</p>
+          <div className="space-y-4">
+            <div>
+              <h4 className="text-md font-medium mb-2">Page Setup</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium mb-1">Orientation</label>
+                  <div className="flex gap-2">
+                    <Button 
+                      variant={printSettings.orientation === 'portrait' ? "default" : "outline"} 
+                      size="sm" 
+                      onClick={() => setOrientation('portrait')}
+                    >
+                      Portrait
+                    </Button>
+                    <Button 
+                      variant={printSettings.orientation === 'landscape' ? "default" : "outline"} 
+                      size="sm" 
+                      onClick={() => setOrientation('landscape')}
+                    >
+                      Landscape
+                    </Button>
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium mb-1">Paper Size</label>
+                  <div className="flex gap-2">
+                    <Button 
+                      variant={printSettings.paperSize === 'a4' ? "default" : "outline"} 
+                      size="sm" 
+                      onClick={() => setPaperSize('a4')}
+                    >
+                      A4
+                    </Button>
+                    <Button 
+                      variant={printSettings.paperSize === 'letter' ? "default" : "outline"} 
+                      size="sm" 
+                      onClick={() => setPaperSize('letter')}
+                    >
+                      Letter
+                    </Button>
+                    <Button 
+                      variant={printSettings.paperSize === 'legal' ? "default" : "outline"} 
+                      size="sm" 
+                      onClick={() => setPaperSize('legal')}
+                    >
+                      Legal
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
             
-            <div className="max-h-60 overflow-y-auto border rounded-md p-2">
-              <table className="min-w-full">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="text-left py-2 px-3">Column</th>
-                    <th className="text-left py-2 px-3">Width (mm)</th>
-                    <th className="text-left py-2 px-3">Visible</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {tableData.headers.map((header, index) => (
-                    <tr key={index} className="border-t">
-                      <td className="py-2 px-3">{header}</td>
-                      <td className="py-2 px-3">
-                        <div className="flex items-center gap-2">
-                          <Button 
-                            variant="outline" 
-                            size="sm" 
-                            onClick={() => updateColumnWidth(index, Math.max(20, (columnSettings[index]?.width || columnWidth) - 5))}
-                            className="h-7 w-7 p-0"
-                          >
-                            <Minimize className="h-3 w-3" />
-                          </Button>
-                          <Input 
-                            type="number" 
-                            min={20} 
-                            max={100} 
-                            value={columnSettings[index]?.width || columnWidth} 
-                            onChange={(e) => updateColumnWidth(index, Number(e.target.value))}
-                            className="w-16 h-8 text-sm"
-                          />
-                          <Button 
-                            variant="outline" 
-                            size="sm" 
-                            onClick={() => updateColumnWidth(index, Math.min(100, (columnSettings[index]?.width || columnWidth) + 5))}
-                            className="h-7 w-7 p-0"
-                          >
-                            <Maximize className="h-3 w-3" />
-                          </Button>
-                        </div>
-                      </td>
-                      <td className="py-2 px-3">
-                        <input 
-                          type="checkbox" 
-                          checked={columnSettings[index]?.visible !== false} 
-                          onChange={() => toggleColumnVisibility(index)} 
-                          className="h-4 w-4"
-                        />
-                      </td>
+            <div>
+              <h4 className="text-md font-medium mb-2">Margins (mm)</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium mb-1">Top Margin: {printSettings.margins.top}mm</label>
+                  <Slider 
+                    value={[printSettings.margins.top]} 
+                    min={5} 
+                    max={50} 
+                    step={1} 
+                    onValueChange={(values) => updateMargin('top', values[0])} 
+                    className="w-full max-w-xs"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Bottom Margin: {printSettings.margins.bottom}mm</label>
+                  <Slider 
+                    value={[printSettings.margins.bottom]} 
+                    min={5} 
+                    max={50} 
+                    step={1} 
+                    onValueChange={(values) => updateMargin('bottom', values[0])} 
+                    className="w-full max-w-xs"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Left Margin: {printSettings.margins.left}mm</label>
+                  <Slider 
+                    value={[printSettings.margins.left]} 
+                    min={5} 
+                    max={50} 
+                    step={1} 
+                    onValueChange={(values) => updateMargin('left', values[0])} 
+                    className="w-full max-w-xs"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Right Margin: {printSettings.margins.right}mm</label>
+                  <Slider 
+                    value={[printSettings.margins.right]} 
+                    min={5} 
+                    max={50} 
+                    step={1} 
+                    onValueChange={(values) => updateMargin('right', values[0])} 
+                    className="w-full max-w-xs"
+                  />
+                </div>
+              </div>
+            </div>
+          
+            <div>
+              <label className="block text-sm font-medium mb-1">Table Border Width: {tableBorderWidth.toFixed(1)}pt</label>
+              <Slider 
+                value={[tableBorderWidth]} 
+                min={0.1} 
+                max={2.0} 
+                step={0.1} 
+                onValueChange={(values) => setTableBorderWidth(values[0])} 
+                className="w-full max-w-xs"
+              />
+            </div>
+            
+            <div>
+              <h4 className="text-md font-medium">Column Settings</h4>
+              <p className="text-sm text-gray-600">Adjust width for individual columns to avoid text overlapping.</p>
+              
+              <div className="max-h-60 overflow-y-auto border rounded-md p-2">
+                <table className="min-w-full">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="text-left py-2 px-3">Column</th>
+                      <th className="text-left py-2 px-3">Width (mm)</th>
+                      <th className="text-left py-2 px-3">Visible</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {tableData.headers.map((header, index) => (
+                      <tr key={index} className="border-t">
+                        <td className="py-2 px-3">{header}</td>
+                        <td className="py-2 px-3">
+                          <div className="flex items-center gap-2">
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              onClick={() => updateColumnWidth(index, Math.max(20, (columnSettings[index]?.width || columnWidth) - 5))}
+                              className="h-7 w-7 p-0"
+                            >
+                              <Minimize className="h-3 w-3" />
+                            </Button>
+                            <Input 
+                              type="number" 
+                              min={20} 
+                              max={100} 
+                              value={columnSettings[index]?.width || columnWidth} 
+                              onChange={(e) => updateColumnWidth(index, Number(e.target.value))}
+                              className="w-16 h-8 text-sm"
+                            />
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              onClick={() => updateColumnWidth(index, Math.min(100, (columnSettings[index]?.width || columnWidth) + 5))}
+                              className="h-7 w-7 p-0"
+                            >
+                              <Maximize className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        </td>
+                        <td className="py-2 px-3">
+                          <input 
+                            type="checkbox" 
+                            checked={columnSettings[index]?.visible !== false} 
+                            onChange={() => toggleColumnVisibility(index)} 
+                            className="h-4 w-4"
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
