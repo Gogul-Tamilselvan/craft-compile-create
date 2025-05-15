@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { DownloadIcon, TrashIcon, ArrowUpIcon, ArrowDownIcon, UploadIcon } from "lucide-react";
@@ -36,7 +35,10 @@ const DocumentMerger: React.FC = () => {
     const invalidFiles = newFilesArray.filter((file) => !validTypes.includes(file.type));
     
     if (invalidFiles.length > 0) {
-      toast.error(`Invalid file type(s): ${invalidFiles.map((f) => f.name).join(", ")}`);
+      toast({
+        description: `Invalid file type(s): ${invalidFiles.map((f) => f.name).join(", ")}`,
+        variant: "destructive"
+      });
       
       // Filter out invalid files
       const validFiles = newFilesArray.filter((file) => validTypes.includes(file.type));
@@ -71,7 +73,9 @@ const DocumentMerger: React.FC = () => {
     setFiles((prevFiles) => [...prevFiles, ...newFiles]);
     e.target.value = "";
     
-    toast.success(`${newFiles.length} file(s) added`);
+    toast({
+      description: `${newFiles.length} file(s) added`,
+    });
   };
 
   const generatePdfThumbnail = async (file: File): Promise<string | undefined> => {
@@ -119,7 +123,6 @@ const DocumentMerger: React.FC = () => {
   const mergeDocuments = async () => {
     if (files.length === 0) {
       toast({
-        title: "Error",
         description: "Please add files to merge",
         variant: "destructive"
       });
@@ -128,7 +131,6 @@ const DocumentMerger: React.FC = () => {
     
     if (files.length === 1) {
       toast({
-        title: "Error",
         description: "Please add at least two files to merge",
         variant: "destructive"
       });

@@ -31,7 +31,10 @@ const TableEditor: React.FC = () => {
 
   const removeColumn = (index: number) => {
     if (tableData.headers.length <= 1) {
-      toast.warning("Table must have at least one column");
+      toast({
+        description: "Table must have at least one column",
+        variant: "destructive"
+      });
       return;
     }
     
@@ -80,12 +83,20 @@ const TableEditor: React.FC = () => {
         if (jsonData && jsonData.headers && Array.isArray(jsonData.headers) && 
             jsonData.rows && Array.isArray(jsonData.rows)) {
           setTableData(jsonData);
-          toast.success("Table data imported successfully");
+          toast({
+            description: "Table data imported successfully",
+          });
         } else {
-          toast.error("Invalid JSON format. Expected {headers: [], rows: [[]]}");
+          toast({
+            description: "Invalid JSON format. Expected {headers: [], rows: [[]]}",
+            variant: "destructive"
+          });
         }
       } catch (error) {
-        toast.error("Error parsing JSON file");
+        toast({
+          description: "Error parsing JSON file",
+          variant: "destructive"
+        });
         console.error(error);
       }
     };
