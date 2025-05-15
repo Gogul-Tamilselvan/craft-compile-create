@@ -2,13 +2,28 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { PlusIcon, TrashIcon, UploadIcon, PrinterIcon, DownloadIcon } from "lucide-react";
+import { PlusIcon, TrashIcon, UploadIcon, DownloadIcon, Table, Info, Maximize, Minimize } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
 import InfoTooltip from "./InfoTooltip";
+import {
+  Table as UITable,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableCell,
+  TableHead
+} from "@/components/ui/table";
+import { Slider } from "@/components/ui/slider";
+import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
 
 interface TableData {
   headers: string[];
   rows: string[][];
+}
+
+interface ColumnSettings {
+  width: number;  // Width in mm for PDF export
+  visible: boolean;
 }
 
 const TableEditor: React.FC = () => {
@@ -21,15 +36,33 @@ const TableEditor: React.FC = () => {
   });
   const [isPrinting, setIsPrinting] = useState(false);
   const [columnWidth, setColumnWidth] = useState<number>(40); // Default column width in mm
-
+  const [columnSettings, setColumnSettings] = useState<ColumnSettings[]>([]);
+  const [showSettings, setShowSettings] = useState(false);
+  const [tableBorderWidth, setTableBorderWidth] = useState<number>(0.5); // Border width in points
+  
   const fileInputRef = useRef<HTMLInputElement>(null);
   const tableRef = useRef<HTMLDivElement>(null);
+
+  // Initialize column settings when tableData changes
+  useEffect(() => {
+    // Only initialize if columnSettings is empty or the number of headers has changed
+    if (columnSettings.length !== tableData.headers.length) {
+      const initialSettings = tableData.headers.map(() => ({
+        width: columnWidth,
+        visible: true
+      }));
+      setColumnSettings(initialSettings);
+    }
+  }, [tableData.headers, columnWidth]);
 
   const addColumn = () => {
     const newHeader = `Column ${tableData.headers.length + 1}`;
     const newHeaders = [...tableData.headers, newHeader];
     const newRows = tableData.rows.map((row) => [...row, ""]);
     setTableData({ headers: newHeaders, rows: newRows });
+    
+    // Add default settings for the new column
+    setColumnSettings([...columnSettings, { width: columnWidth, visible: true }]);
   };
 
   const removeColumn = (index: number) => {
@@ -44,6 +77,9 @@ const TableEditor: React.FC = () => {
     const newHeaders = tableData.headers.filter((_, i) => i !== index);
     const newRows = tableData.rows.map((row) => row.filter((_, i) => i !== index));
     setTableData({ headers: newHeaders, rows: newRows });
+    
+    // Remove settings for the deleted column
+    setColumnSettings(columnSettings.filter((_, i) => i !== index));
   };
 
   const addRow = () => {
@@ -109,11 +145,23 @@ const TableEditor: React.FC = () => {
     event.target.value = "";
   };
 
+  const updateColumnWidth = (index: number, newWidth: number) => {
+    const newSettings = [...columnSettings];
+    newSettings[index] = { ...newSettings[index], width: newWidth };
+    setColumnSettings(newSettings);
+  };
+
+  const toggleColumnVisibility = (index: number) => {
+    const newSettings = [...columnSettings];
+    newSettings[index] = { ...newSettings[index], visible: !newSettings[index].visible };
+    setColumnSettings(newSettings);
+  };
+
   const handlePrint = async () => {
     setIsPrinting(true);
     
     try {
-      // Generate PDF using jsPDF directly instead of popup window
+      // Generate PDF using jsPDF
       const { jsPDF } = await import('jspdf');
       const doc = new jsPDF({
         orientation: 'landscape',
@@ -121,19 +169,27 @@ const TableEditor: React.FC = () => {
         format: 'a4'
       });
       
+      // Get visible columns
+      const visibleColumns = tableData.headers.map((header, index) => ({
+        header,
+        index,
+        width: columnSettings[index]?.width || columnWidth,
+        visible: columnSettings[index]?.visible !== false
+      })).filter(col => col.visible);
+      
       // Add table headers
       let y = 20;
       const margin = 10;
       const pageWidth = doc.internal.pageSize.getWidth();
-      // Use the user-adjustable columnWidth
-      const availableWidth = pageWidth - 2 * margin;
-      const maxColumns = Math.floor(availableWidth / columnWidth);
       let currentPage = 1;
       
       // Add title
       doc.setFontSize(16);
       doc.text("Table Export", margin, y);
       y += 10;
+      
+      // Set border width
+      doc.setLineWidth(tableBorderWidth);
       
       // Helper function to add a page
       const addPage = () => {
@@ -147,53 +203,97 @@ const TableEditor: React.FC = () => {
         doc.setFontSize(12);
       };
       
-      // Process headers and rows in chunks based on column width
+      // Calculate total width of all visible columns
+      const totalColWidth = visibleColumns.reduce((sum, col) => sum + col.width, 0);
+      
+      // Adjust column widths if total exceeds page width
+      const availableWidth = pageWidth - 2 * margin;
+      const scaleFactor = totalColWidth > availableWidth ? availableWidth / totalColWidth : 1;
+      
+      // Process the table with visible columns and adjusted widths
       const processTable = () => {
-        for (let startCol = 0; startCol < tableData.headers.length; startCol += maxColumns) {
-          const endCol = Math.min(startCol + maxColumns, tableData.headers.length);
-          const currentHeaders = tableData.headers.slice(startCol, endCol);
+        let xPos = margin;
+        
+        // Draw header cells with borders
+        doc.setFillColor(240, 240, 240);
+        visibleColumns.forEach((col) => {
+          const adjustedWidth = col.width * scaleFactor;
           
-          // Add headers
+          // Draw header cell background
+          doc.rect(xPos, y - 5, adjustedWidth, 8, 'FD');
+          
+          // Draw header text
           doc.setFontSize(12);
           doc.setTextColor(100, 100, 100);
-          currentHeaders.forEach((header, i) => {
-            doc.text(header, margin + i * columnWidth, y);
-          });
+          doc.text(col.header, xPos + 2, y);
           
-          y += 10;
-          
-          // Add rows
-          doc.setTextColor(0, 0, 0);
-          tableData.rows.forEach((row, rowIndex) => {
-            // Check if we need a new page
-            if (y > doc.internal.pageSize.getHeight() - 20) {
-              addPage();
-              
-              // Re-add headers on the new page
-              doc.setTextColor(100, 100, 100);
-              currentHeaders.forEach((header, i) => {
-                doc.text(header, margin + i * columnWidth, y);
-              });
-              
-              y += 10;
-              doc.setTextColor(0, 0, 0);
-            }
+          xPos += adjustedWidth;
+        });
+        
+        y += 8; // Space after headers
+        
+        // Draw rows
+        doc.setTextColor(0, 0, 0);
+        tableData.rows.forEach((row) => {
+          // Check if we need a new page
+          if (y > doc.internal.pageSize.getHeight() - 20) {
+            addPage();
             
-            const currentCells = row.slice(startCol, endCol);
-            currentCells.forEach((cell, i) => {
-              // Ensure text doesn't overflow the cell width
-              const cellText = cell.length > 20 ? cell.substring(0, 17) + "..." : cell;
-              doc.text(cellText, margin + i * columnWidth, y);
+            // Re-draw headers on the new page
+            xPos = margin;
+            doc.setFillColor(240, 240, 240);
+            visibleColumns.forEach((col) => {
+              const adjustedWidth = col.width * scaleFactor;
+              doc.rect(xPos, y - 5, adjustedWidth, 8, 'FD');
+              doc.setFontSize(12);
+              doc.setTextColor(100, 100, 100);
+              doc.text(col.header, xPos + 2, y);
+              xPos += adjustedWidth;
             });
             
-            y += 8; // Space between rows
+            doc.setTextColor(0, 0, 0);
+            y += 8;
+          }
+          
+          // Draw row cells with borders
+          xPos = margin;
+          let maxHeight = 8; // Default row height
+          
+          // First pass: calculate max height needed for this row
+          visibleColumns.forEach((col) => {
+            const cellText = row[col.index] || '';
+            const adjustedWidth = col.width * scaleFactor;
+            
+            // Estimate lines needed based on text length and cell width
+            const textWidth = doc.getStringUnitWidth(cellText) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+            const linesNeeded = Math.max(1, Math.ceil(textWidth / (adjustedWidth - 4)));
+            const cellHeight = linesNeeded * 5 + 3; // 5mm per line + padding
+            
+            if (cellHeight > maxHeight) {
+              maxHeight = cellHeight;
+            }
           });
           
-          // If we have more columns to process, add a new page
-          if (endCol < tableData.headers.length) {
-            addPage();
-          }
-        }
+          // Second pass: draw cells with uniform height
+          visibleColumns.forEach((col) => {
+            const cellText = row[col.index] || '';
+            const adjustedWidth = col.width * scaleFactor;
+            
+            // Draw cell border
+            doc.rect(xPos, y - 5, adjustedWidth, maxHeight);
+            
+            // Draw cell content with word wrapping
+            const textOptions = {
+              maxWidth: adjustedWidth - 4,
+              lineHeightFactor: 1.2
+            };
+            
+            doc.text(cellText, xPos + 2, y, textOptions);
+            xPos += adjustedWidth;
+          });
+          
+          y += maxHeight; // Use calculated height for the row
+        });
       };
       
       processTable();
@@ -207,7 +307,6 @@ const TableEditor: React.FC = () => {
     } catch (error) {
       console.error("Export error:", error);
       toast({
-        title: "Error",
         description: "Error exporting table",
         variant: "destructive"
       });
@@ -239,19 +338,15 @@ const TableEditor: React.FC = () => {
           <InfoTooltip content={tableJsonFormat} />
         </div>
         <div className="flex flex-wrap gap-2">
-          <div className="flex items-center gap-2 mr-2">
-            <label htmlFor="columnWidth" className="text-sm whitespace-nowrap">Column Width:</label>
-            <Input
-              id="columnWidth"
-              type="number"
-              min={20}
-              max={100}
-              value={columnWidth}
-              onChange={(e) => setColumnWidth(Number(e.target.value))}
-              className="w-20 h-8"
-            />
-            <span className="text-sm">mm</span>
-          </div>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={() => setShowSettings(!showSettings)}
+            className="flex items-center gap-1"
+          >
+            <Table className="w-4 h-4 mr-1" />
+            {showSettings ? "Hide Settings" : "Table Settings"}
+          </Button>
           <Button variant="outline" size="sm" onClick={handleImport}>
             <UploadIcon className="w-4 h-4 mr-2" />
             Import JSON
@@ -275,14 +370,93 @@ const TableEditor: React.FC = () => {
         </div>
       </div>
 
+      {showSettings && (
+        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+          <h3 className="text-lg font-semibold mb-3">Table Export Settings</h3>
+          
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-1">Table Border Width: {tableBorderWidth.toFixed(1)}pt</label>
+            <Slider 
+              value={[tableBorderWidth]} 
+              min={0.1} 
+              max={2.0} 
+              step={0.1} 
+              onValueChange={(values) => setTableBorderWidth(values[0])} 
+              className="w-full max-w-xs"
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <h4 className="text-md font-medium">Column Settings</h4>
+            <p className="text-sm text-gray-600">Adjust width for individual columns to avoid text overlapping.</p>
+            
+            <div className="max-h-60 overflow-y-auto border rounded-md p-2">
+              <table className="min-w-full">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="text-left py-2 px-3">Column</th>
+                    <th className="text-left py-2 px-3">Width (mm)</th>
+                    <th className="text-left py-2 px-3">Visible</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {tableData.headers.map((header, index) => (
+                    <tr key={index} className="border-t">
+                      <td className="py-2 px-3">{header}</td>
+                      <td className="py-2 px-3">
+                        <div className="flex items-center gap-2">
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            onClick={() => updateColumnWidth(index, Math.max(20, (columnSettings[index]?.width || columnWidth) - 5))}
+                            className="h-7 w-7 p-0"
+                          >
+                            <Minimize className="h-3 w-3" />
+                          </Button>
+                          <Input 
+                            type="number" 
+                            min={20} 
+                            max={100} 
+                            value={columnSettings[index]?.width || columnWidth} 
+                            onChange={(e) => updateColumnWidth(index, Number(e.target.value))}
+                            className="w-16 h-8 text-sm"
+                          />
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            onClick={() => updateColumnWidth(index, Math.min(100, (columnSettings[index]?.width || columnWidth) + 5))}
+                            className="h-7 w-7 p-0"
+                          >
+                            <Maximize className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      </td>
+                      <td className="py-2 px-3">
+                        <input 
+                          type="checkbox" 
+                          checked={columnSettings[index]?.visible !== false} 
+                          onChange={() => toggleColumnVisibility(index)} 
+                          className="h-4 w-4"
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
+        <UITable className="border-collapse">
+          <TableHeader>
+            <TableRow>
               {tableData.headers.map((header, index) => (
-                <th 
+                <TableHead 
                   key={index} 
-                  className="px-3 py-2 text-left bg-gray-50 border-b border-gray-200"
+                  className="px-3 py-2 text-left bg-gray-50 border border-gray-200"
+                  style={columnSettings[index]?.visible === false ? { display: 'none' } : {}}
                 >
                   <div className="flex items-center gap-2">
                     <Input
@@ -300,9 +474,9 @@ const TableEditor: React.FC = () => {
                       <TrashIcon className="w-4 h-4" />
                     </Button>
                   </div>
-                </th>
+                </TableHead>
               ))}
-              <th className="px-3 py-2 text-left bg-gray-50 border-b border-gray-200">
+              <TableHead className="px-3 py-2 text-left bg-gray-50 border border-gray-200">
                 <Button 
                   variant="ghost" 
                   size="sm" 
@@ -312,23 +486,27 @@ const TableEditor: React.FC = () => {
                   <PlusIcon className="w-4 h-4 mr-1" />
                   Add Column
                 </Button>
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {tableData.rows.map((row, rowIndex) => (
-              <tr key={rowIndex}>
+              <TableRow key={rowIndex}>
                 {row.map((cell, colIndex) => (
-                  <td key={colIndex} className="px-3 py-2 border-b border-gray-200">
+                  <TableCell 
+                    key={colIndex} 
+                    className="px-3 py-2 border border-gray-200"
+                    style={columnSettings[colIndex]?.visible === false ? { display: 'none' } : {}}
+                  >
                     <Input
                       value={cell}
                       onChange={(e) => updateCell(rowIndex, colIndex, e.target.value)}
                       className="min-w-[100px] h-8 text-sm"
                       placeholder="Enter data"
                     />
-                  </td>
+                  </TableCell>
                 ))}
-                <td className="px-3 py-2 border-b border-gray-200">
+                <TableCell className="px-3 py-2 border border-gray-200">
                   <Button 
                     variant="ghost" 
                     size="icon"
@@ -337,13 +515,13 @@ const TableEditor: React.FC = () => {
                   >
                     <TrashIcon className="w-4 h-4" />
                   </Button>
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             ))}
-            <tr>
-              <td 
+            <TableRow>
+              <TableCell 
                 colSpan={tableData.headers.length + 1} 
-                className="px-3 py-2 border-b border-gray-200"
+                className="px-3 py-2 border border-gray-200"
               >
                 <Button 
                   variant="ghost" 
@@ -354,10 +532,10 @@ const TableEditor: React.FC = () => {
                   <PlusIcon className="w-4 h-4 mr-1" />
                   Add Row
                 </Button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </UITable>
       </div>
     </div>
   );
