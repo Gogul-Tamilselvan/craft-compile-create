@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -265,7 +264,8 @@ const TableEditor: React.FC = () => {
             const adjustedWidth = col.width * scaleFactor;
             
             // Estimate lines needed based on text length and cell width
-            const textWidth = doc.getStringUnitWidth(cellText) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+            const fontSize = 12; // This matches the fontSize we set with doc.setFontSize(12)
+            const textWidth = doc.getStringUnitWidth(cellText) * fontSize / doc.internal.scaleFactor;
             const linesNeeded = Math.max(1, Math.ceil(textWidth / (adjustedWidth - 4)));
             const cellHeight = linesNeeded * 5 + 3; // 5mm per line + padding
             
