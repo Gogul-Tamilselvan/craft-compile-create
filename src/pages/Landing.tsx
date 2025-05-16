@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,7 +24,6 @@ import {
   UsersIcon, 
   PhoneIcon, 
   InfoIcon,
-  PalmtreeIcon,
   PlaneIcon,
   LuggageIcon,
   TicketIcon,
@@ -124,85 +122,28 @@ const Landing: React.FC = () => {
             </button>
             
             {/* Desktop Navigation */}
-            <div className="hidden md:flex">
-              <NavigationMenu>
-                <NavigationMenuList>
-                  <NavigationMenuItem>
-                    <NavigationMenuLink 
-                      className={navigationMenuTriggerStyle()}
-                      onClick={() => scrollToSection('home')}
-                    >
-                      Home
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
-                  <NavigationMenuItem>
-                    <NavigationMenuLink 
-                      className={navigationMenuTriggerStyle()}
-                      onClick={() => scrollToSection('about')}
-                    >
-                      About
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
-                  <NavigationMenuItem>
-                    <NavigationMenuTrigger>Services</NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <div className="grid w-[600px] grid-cols-2 p-4 gap-3">
-                        <div onClick={() => scrollToSection('services')} className="p-3 hover:bg-blue-50 rounded-md cursor-pointer">
-                          <div className="flex items-center gap-2 mb-1">
-                            <PlaneIcon className="h-5 w-5 text-blue-600" />
-                            <h3 className="text-sm font-medium">Flight Tickets</h3>
-                          </div>
-                          <p className="text-xs text-gray-500">Domestic & International flights</p>
-                        </div>
-                        <div onClick={() => scrollToSection('services')} className="p-3 hover:bg-blue-50 rounded-md cursor-pointer">
-                          <div className="flex items-center gap-2 mb-1">
-                            <FileTextIcon className="h-5 w-5 text-blue-600" />
-                            <h3 className="text-sm font-medium">Passport Services</h3>
-                          </div>
-                          <p className="text-xs text-gray-500">New, Renewal & Lost</p>
-                        </div>
-                        <div onClick={() => scrollToSection('services')} className="p-3 hover:bg-blue-50 rounded-md cursor-pointer">
-                          <div className="flex items-center gap-2 mb-1">
-                            <FileTextIcon className="h-5 w-5 text-blue-600" />
-                            <h3 className="text-sm font-medium">Visa Services</h3>
-                          </div>
-                          <p className="text-xs text-gray-500">Tourist, Business & Student</p>
-                        </div>
-                        <div onClick={() => scrollToSection('services')} className="p-3 hover:bg-blue-50 rounded-md cursor-pointer">
-                          <div className="flex items-center gap-2 mb-1">
-                            <UsersIcon className="h-5 w-5 text-blue-600" />
-                            <h3 className="text-sm font-medium">Job Consultancy</h3>
-                          </div>
-                          <p className="text-xs text-gray-500">Overseas employment opportunities</p>
-                        </div>
-                      </div>
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
-                  <NavigationMenuItem>
-                    <NavigationMenuLink 
-                      className={navigationMenuTriggerStyle()}
-                      onClick={() => scrollToSection('testimonials')}
-                    >
-                      Testimonials
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
-                  <NavigationMenuItem>
-                    <NavigationMenuLink 
-                      className={navigationMenuTriggerStyle()}
-                      onClick={() => scrollToSection('contact')}
-                    >
-                      Contact
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
-                </NavigationMenuList>
-              </NavigationMenu>
+            <div className="hidden md:flex items-center space-x-8">
+              <button onClick={() => scrollToSection('home')} className="text-gray-700 hover:text-blue-600">
+                Home
+              </button>
+              <button onClick={() => scrollToSection('about')} className="text-gray-700 hover:text-blue-600">
+                About
+              </button>
+              <button onClick={() => scrollToSection('services')} className="text-gray-700 hover:text-blue-600">
+                Services
+              </button>
+              <button onClick={() => scrollToSection('testimonials')} className="text-gray-700 hover:text-blue-600">
+                Testimonials
+              </button>
+              <button onClick={() => scrollToSection('contact')} className="text-gray-700 hover:text-blue-600">
+                Contact
+              </button>
+              <Link to="/app">
+                <Button size="sm" className="bg-blue-600 hover:bg-blue-700 ml-4">
+                  Client Portal
+                </Button>
+              </Link>
             </div>
-            
-            <Link to="/app" className="hidden md:block">
-              <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
-                Client Portal
-              </Button>
-            </Link>
           </div>
           
           {/* Mobile menu */}
@@ -249,7 +190,7 @@ const Landing: React.FC = () => {
             <div className="absolute top-[30%] right-[25%] animate-float" style={{ animationDelay: "4s", animationDuration: "18s" }}>
               <div className="relative">
                 <div className="absolute inset-0 bg-white/10 rounded-full blur-xl transform -translate-x-1/2 -translate-y-1/2"></div>
-                <PalmtreeIcon className="w-14 h-14 text-white/60" />
+                <PlaneIcon className="w-14 h-14 text-white/60 rotate-45" />
               </div>
             </div>
             
@@ -274,10 +215,15 @@ const Landing: React.FC = () => {
             <div className="absolute top-0 right-[30%] w-60 h-[120%] bg-white/10 rotate-[35deg] blur-3xl transform -translate-y-1/3"></div>
           </div>
           
-          {/* Background image with parallax effect */}
+          {/* Background image with lazy loading */}
           <div 
             ref={heroRef}
-            className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1')] bg-cover bg-center transition-transform duration-300"
+            className="absolute inset-0 opacity-20 bg-center transition-transform duration-300"
+            style={{
+              backgroundImage: "url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200&auto=format&q=75')",
+              backgroundSize: "cover",
+              backgroundPosition: "center"
+            }}
           ></div>
           
           {/* Animated overlay */}
@@ -327,17 +273,17 @@ const Landing: React.FC = () => {
                   className="bg-white text-blue-600 hover:bg-blue-50 hover:scale-105 transition-all duration-300 shadow-lg group"
                 >
                   <span>Contact Us</span>
-                  <PhoneIcon className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  <PhoneIcon className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
                 </Button>
                 
                 <Button 
                   size="lg" 
                   variant="outline"
                   onClick={() => scrollToSection('services')}
-                  className="border-white text-white hover:bg-white/20 hover:scale-105 transition-all duration-300"
+                  className="border-white text-white bg-blue-600/30 hover:bg-white/20 hover:scale-105 transition-all duration-300"
                 >
                   <span>Explore Services</span>
-                  <CompassIcon className="w-4 h-4 ml-1" />
+                  <CompassIcon className="w-4 h-4 ml-2" />
                 </Button>
               </div>
               
@@ -371,11 +317,12 @@ const Landing: React.FC = () => {
                 {/* 3D rotation effect on hover */}
                 <div className="bg-white p-4 rounded-lg shadow-2xl transform perspective-1000 transition-all duration-500 hover:rotate-y-12 hover:scale-105 relative z-10">
                   <img 
-                    src="https://images.unsplash.com/photo-1511739001486-6bfe10ce785f" 
+                    src="https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?w=500&auto=format&q=75" 
                     alt="Aasia Consultancy Travel Services" 
                     className="w-full h-auto rounded"
                     width={500}
                     height={375}
+                    loading="eager"
                   />
                 </div>
                 
@@ -923,10 +870,10 @@ const Landing: React.FC = () => {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* Footer - with travel icons removed */}
       <footer className="bg-gray-900 text-white py-12">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
               <h3 className="text-xl font-bold mb-4 flex items-center">
                 <GlobeIcon className="w-6 h-6 mr-2" /> 
@@ -948,7 +895,7 @@ const Landing: React.FC = () => {
                 </a>
                 <a href="#" className="text-gray-400 hover:text-white transition-colors hover:scale-110 transform duration-200">
                   <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                    <path fillRule="evenodd" d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
                   </svg>
                 </a>
                 <a href="#" className="text-gray-400 hover:text-white transition-colors hover:scale-110 transform duration-200">
@@ -980,36 +927,6 @@ const Landing: React.FC = () => {
                 <li><a onClick={() => scrollToSection('services')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Travel Consultancy</a></li>
               </ul>
             </div>
-            
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Travel Icons</h3>
-              <div className="grid grid-cols-3 gap-4">
-                <div className="flex flex-col items-center">
-                  <PlaneIcon className="w-8 h-8 text-gray-400 hover:text-white transition-colors cursor-pointer" />
-                  <span className="text-xs mt-1 text-gray-500">Flights</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <LuggageIcon className="w-8 h-8 text-gray-400 hover:text-white transition-colors cursor-pointer" />
-                  <span className="text-xs mt-1 text-gray-500">Travel</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <PalmtreeIcon className="w-8 h-8 text-gray-400 hover:text-white transition-colors cursor-pointer" />
-                  <span className="text-xs mt-1 text-gray-500">Tourism</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <HotelIcon className="w-8 h-8 text-gray-400 hover:text-white transition-colors cursor-pointer" />
-                  <span className="text-xs mt-1 text-gray-500">Hotels</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <EarthIcon className="w-8 h-8 text-gray-400 hover:text-white transition-colors cursor-pointer" />
-                  <span className="text-xs mt-1 text-gray-500">World</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <CameraIcon className="w-8 h-8 text-gray-400 hover:text-white transition-colors cursor-pointer" />
-                  <span className="text-xs mt-1 text-gray-500">Explore</span>
-                </div>
-              </div>
-            </div>
           </div>
           
           <div className="border-t border-gray-800 mt-12 pt-8 text-center">
@@ -1024,4 +941,3 @@ const Landing: React.FC = () => {
 };
 
 export default Landing;
-
