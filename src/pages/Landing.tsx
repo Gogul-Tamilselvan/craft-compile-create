@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -19,37 +19,106 @@ import {
 import { CheckIcon, GlobeIcon, FileTextIcon, MapPin, CalendarIcon, UsersIcon, PhoneIcon, InfoIcon } from "lucide-react";
 
 const Landing: React.FC = () => {
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (heroRef.current) {
+        const scrollPosition = window.scrollY;
+        const opacity = Math.max(0.2, Math.min(1 - scrollPosition / 800, 1));
+        const scale = Math.max(1, 1 + scrollPosition / 2000);
+        const translateY = scrollPosition * 0.3;
+        
+        if (heroRef.current) {
+          heroRef.current.style.opacity = opacity.toString();
+          heroRef.current.style.transform = `scale(${scale}) translateY(${translateY}px)`;
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className="bg-white min-h-screen">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-blue-600 to-blue-800 overflow-hidden">
-        <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1469041797191-50ace28483c3')] bg-cover bg-center" />
-        <div className="container mx-auto px-4 py-20 sm:py-28 relative z-10">
+      {/* Hero Section - Enhanced with Animations */}
+      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-800 to-blue-600 overflow-hidden">
+          {/* Animated circles */}
+          <div className="absolute w-72 h-72 rounded-full bg-blue-400 opacity-10 -top-10 -left-10 animate-pulse"></div>
+          <div className="absolute w-96 h-96 rounded-full bg-blue-300 opacity-10 bottom-0 right-0 animate-pulse" style={{ animationDelay: "1s" }}></div>
+          <div className="absolute w-48 h-48 rounded-full bg-blue-500 opacity-10 top-1/2 left-1/4 animate-pulse" style={{ animationDelay: "1.5s" }}></div>
+          
+          {/* Background image with parallax effect */}
+          <div 
+            ref={heroRef}
+            className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158')] bg-cover bg-center transition-transform duration-300"
+          ></div>
+          
+          {/* Animated overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-blue-900/50"></div>
+
+          {/* Floating elements */}
+          <div className="hidden md:block absolute top-20 left-[10%] w-12 h-12 bg-white rounded-full opacity-20 animate-bounce" style={{ animationDuration: "3s" }}></div>
+          <div className="hidden md:block absolute top-40 right-[20%] w-8 h-8 bg-white rounded-full opacity-10 animate-bounce" style={{ animationDuration: "4s", animationDelay: "1s" }}></div>
+          <div className="hidden md:block absolute bottom-20 left-[30%] w-16 h-16 bg-white rounded-full opacity-15 animate-bounce" style={{ animationDuration: "5s", animationDelay: "0.5s" }}></div>
+        </div>
+        
+        {/* Content with reveal animations */}
+        <div className="container mx-auto px-4 relative z-10">
           <div className="flex flex-col md:flex-row items-center">
-            <div className="flex-1 text-center md:text-left text-white mb-10 md:mb-0">
-              <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-                Your Trusted Travel Partner in Pattukottai
+            <div className="flex-1 text-center md:text-left text-white mb-10 md:mb-0 animate-fade-in" style={{ animationDelay: "0.3s" }}>
+              <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-4">
+                <span className="block transform transition-all duration-500 hover:scale-105 origin-left">Your Trusted</span> 
+                <span className="block transform transition-all duration-500 hover:scale-105 origin-left mt-2">Travel Partner</span>
+                <span className="block transform transition-all duration-500 hover:scale-105 origin-left mt-2">in Pattukottai</span>
               </h1>
-              <p className="text-xl mt-4 text-blue-100">
+              <p className="text-xl mt-6 text-blue-100 max-w-lg animate-fade-in" style={{ animationDelay: "0.6s" }}>
                 We make your journey seamless from planning to destination
               </p>
-              <div className="mt-8">
-                <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50">
+              <div className="mt-10 animate-fade-in" style={{ animationDelay: "0.9s" }}>
+                <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50 hover:scale-105 transition-all duration-300 shadow-lg">
                   Get Free Consultation
                 </Button>
               </div>
             </div>
             <div className="flex-1 flex justify-center md:justify-end">
-              <div className="bg-white p-4 rounded-lg shadow-xl">
-                <img 
-                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158" 
-                  alt="Aasia Consultancy Travel Services" 
-                  className="w-full h-auto rounded"
-                  width={500}
-                  height={375}
-                />
+              <div className="relative animate-fade-in" style={{ animationDelay: "0.6s" }}>
+                {/* Main image with hover effect */}
+                <div className="bg-white p-4 rounded-lg shadow-2xl transform transition-all duration-500 hover:scale-105 hover:rotate-1 relative z-10">
+                  <img 
+                    src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158" 
+                    alt="Aasia Consultancy Travel Services" 
+                    className="w-full h-auto rounded"
+                    width={500}
+                    height={375}
+                  />
+                </div>
+                
+                {/* Decorative elements */}
+                <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-blue-200 rounded-lg -z-10 animate-pulse"></div>
+                <div className="absolute -top-6 -right-6 w-24 h-24 bg-yellow-100 rounded-lg -z-10 animate-pulse" style={{ animationDelay: "1s" }}></div>
+                
+                {/* Floating icons */}
+                <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-white p-3 rounded-full shadow-lg animate-bounce" style={{ animationDuration: "3s" }}>
+                  <GlobeIcon className="text-blue-600 w-6 h-6" />
+                </div>
+                <div className="absolute -bottom-5 right-10 bg-white p-3 rounded-full shadow-lg animate-bounce" style={{ animationDuration: "4s", animationDelay: "1s" }}>
+                  <CalendarIcon className="text-blue-600 w-6 h-6" />
+                </div>
+                <div className="absolute top-1/2 -right-8 bg-white p-3 rounded-full shadow-lg animate-bounce" style={{ animationDuration: "3.5s", animationDelay: "0.5s" }}>
+                  <FileTextIcon className="text-blue-600 w-6 h-6" />
+                </div>
               </div>
             </div>
+          </div>
+          
+          {/* Scroll indicator */}
+          <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce" style={{ animationDuration: "2s" }}>
+            <span className="text-white text-sm mb-2">Scroll Down</span>
+            <div className="w-6 h-6 border-b-2 border-r-2 border-white transform rotate-45"></div>
           </div>
         </div>
       </section>
