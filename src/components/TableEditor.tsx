@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -235,7 +234,8 @@ const TableEditor: React.FC = () => {
       let currentPage = 1;
       
       // Add title
-      doc.setFontSize(16);
+      const fontSize = 16; // Define fontSize directly
+      doc.setFontSize(fontSize);
       doc.text("Table Export", margin, y);
       y += 10;
       
@@ -275,7 +275,9 @@ const TableEditor: React.FC = () => {
           // Draw header text
           doc.setFontSize(12);
           doc.setTextColor(100, 100, 100);
-          doc.text(col.header, xPos + 2, y);
+          
+          // Ensure header text is printed by using a direct string
+          doc.text(String(col.header), xPos + 2, y);
           
           xPos += adjustedWidth;
         });
@@ -297,7 +299,7 @@ const TableEditor: React.FC = () => {
               doc.rect(xPos, y - 5, adjustedWidth, 8, 'FD');
               doc.setFontSize(12);
               doc.setTextColor(100, 100, 100);
-              doc.text(col.header, xPos + 2, y);
+              doc.text(String(col.header), xPos + 2, y);
               xPos += adjustedWidth;
             });
             
@@ -311,7 +313,7 @@ const TableEditor: React.FC = () => {
           
           // First pass: calculate max height needed for this row
           visibleColumns.forEach((col) => {
-            const cellText = row[col.index] || '';
+            const cellText = String(row[col.index] || '');
             const adjustedWidth = col.width * scaleFactor;
             
             // Estimate lines needed based on text length and cell width
@@ -327,7 +329,7 @@ const TableEditor: React.FC = () => {
           
           // Second pass: draw cells with uniform height
           visibleColumns.forEach((col) => {
-            const cellText = row[col.index] || '';
+            const cellText = String(row[col.index] || '');
             const adjustedWidth = col.width * scaleFactor;
             
             // Draw cell border
