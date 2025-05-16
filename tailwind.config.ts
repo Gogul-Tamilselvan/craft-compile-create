@@ -94,6 +94,14 @@ const config = {
         "pulse-slow": {
           "0%, 100%": { opacity: "0.6" },
           "50%": { opacity: "0.8" }
+        },
+        "rotate-y-12": {
+          "0%": { transform: "rotateY(0deg)" },
+          "100%": { transform: "rotateY(12deg)" }
+        },
+        "bounce-subtle": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-5px)" }
         }
       },
       animation: {
@@ -101,7 +109,18 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-in": "fade-in 0.7s ease-out forwards",
         "float": "float 6s ease-in-out infinite",
-        "pulse-slow": "pulse-slow 4s ease-in-out infinite"
+        "pulse-slow": "pulse-slow 4s ease-in-out infinite",
+        "rotate-y-12": "rotate-y-12 1s ease-in-out",
+        "bounce-subtle": "bounce-subtle 2s ease-in-out infinite"
+      },
+      transformStyle: {
+        "3d": "preserve-3d",
+      },
+      perspective: {
+        "1000": "1000px",
+      },
+      rotate: {
+        "y-12": "rotateY(12deg)",
       },
     },
   },
