@@ -1,8 +1,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Card,
   CardContent,
@@ -105,7 +103,7 @@ const Landing: React.FC = () => {
       setIsScrolled(scrollPosition > 50);
       
       // Check which sections are visible
-      const sections = ["home", "about", "services", "testimonials", "contact"];
+      const sections = ["home", "about", "services", "testimonials"];
       const newVisibleSections: Record<string, boolean> = {};
       
       sections.forEach(id => {
@@ -185,7 +183,7 @@ const Landing: React.FC = () => {
             
             {/* Desktop Navigation with hover effects */}
             <div className="hidden md:flex items-center space-x-8">
-              {["home", "about", "services", "testimonials", "contact"].map((section) => (
+              {["home", "about", "services", "testimonials"].map((section) => (
                 <button 
                   key={section}
                   onClick={() => scrollToSection(section)} 
@@ -217,7 +215,7 @@ const Landing: React.FC = () => {
           {isMenuOpen && (
             <div className="md:hidden py-4 animate-in slide-in-from-right duration-300">
               <div className="flex flex-col space-y-1 bg-blue-50 rounded-lg p-2">
-                {["home", "about", "services", "testimonials", "contact"].map((section) => (
+                {["home", "about", "services", "testimonials"].map((section) => (
                   <button 
                     key={section}
                     onClick={() => scrollToSection(section)} 
@@ -247,55 +245,56 @@ const Landing: React.FC = () => {
         </div>
       </nav>
 
-      {/* Premium Hero Section with Animations */}
+      {/* Enhanced Premium Hero Section with Luxury Look */}
       <section 
         id="home" 
         className="min-h-screen flex items-center pt-20 relative overflow-hidden"
         ref={heroRef}
       >
-        {/* Sophisticated background with subtle animations */}
+        {/* Enhanced background with premium animations */}
         <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-950 to-gray-900 overflow-hidden">
-          {/* Animated particles/stars */}
+          {/* Animated particles/stars - enhanced for luxury look */}
           <div className="absolute inset-0">
-            {[...Array(20)].map((_, i) => (
+            {[...Array(30)].map((_, i) => (
               <div 
                 key={i}
                 className="absolute rounded-full bg-white/10"
                 style={{
                   top: `${Math.random() * 100}%`,
                   left: `${Math.random() * 100}%`,
-                  width: `${Math.random() * 6 + 2}px`,
-                  height: `${Math.random() * 6 + 2}px`,
+                  width: `${Math.random() * 8 + 1}px`,
+                  height: `${Math.random() * 8 + 1}px`,
                   opacity: Math.random() * 0.5 + 0.3,
-                  animation: `pulse-slow ${Math.random() * 4 + 3}s infinite ease-in-out ${Math.random() * 2}s`
+                  animation: `pulse-slow ${Math.random() * 6 + 3}s infinite ease-in-out ${Math.random() * 3}s`
                 }}
               ></div>
             ))}
           </div>
           
-          {/* Premium gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-blue-900/50 to-transparent"></div>
+          {/* Premium gradient overlay with enhanced depth */}
+          <div className="absolute inset-0 bg-gradient-to-t from-blue-900/70 to-transparent"></div>
           
-          {/* Animated blurred spheres */}
+          {/* Animated luxury blurred spheres */}
           <div className="absolute -top-20 -left-20 w-96 h-96 rounded-full bg-blue-700/20 blur-3xl animate-float"></div>
           <div className="absolute -bottom-40 -right-20 w-96 h-96 rounded-full bg-indigo-600/10 blur-3xl animate-float" style={{animationDelay: "2s"}}></div>
+          <div className="absolute top-1/3 right-1/4 w-64 h-64 rounded-full bg-blue-500/10 blur-3xl animate-float" style={{animationDelay: "3.5s"}}></div>
         </div>
         
-        {/* Hero Content */}
+        {/* Enhanced Hero Content */}
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left Content with animated entrance */}
+            {/* Left Content with enhanced animations */}
             <div className="text-white space-y-8 animate-scale-fade-in">
               <div className="space-y-5 max-w-xl">
-                {/* Premium badge */}
+                {/* Premium badge with enhanced design */}
                 <div className="inline-block animate-fade-in" style={{animationDelay: "0.3s"}}>
-                  <div className="flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full">
+                  <div className="flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full shadow-lg">
                     <span className="w-2 h-2 rounded-full bg-blue-400 mr-2 animate-pulse"></span>
-                    <span className="text-blue-100 text-sm font-medium">Premier Travel Solutions</span>
+                    <span className="text-blue-100 text-sm font-medium">Premium Travel Solutions</span>
                   </div>
                 </div>
                 
-                {/* Heading with gradient and animation */}
+                {/* Enhanced Heading with luxury gradient and animation */}
                 <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight tracking-tight animate-fade-in" style={{animationDelay: "0.5s"}}>
                   <span className="block">Experience</span>
                   <span className="block mt-2 bg-gradient-to-r from-white via-blue-100 to-blue-200 bg-clip-text text-transparent">
@@ -303,56 +302,56 @@ const Landing: React.FC = () => {
                   </span>
                 </h1>
                 
-                {/* Subheading with animation */}
+                {/* Enhanced Subheading with animation */}
                 <p className="text-lg sm:text-xl text-blue-100/90 max-w-lg animate-fade-in" style={{animationDelay: "0.7s"}}>
                   Elevate your journey with Pattukottai's most trusted travel consultancy. 
                   From documentation to destination, we make every step of your travel seamless.
                 </p>
               </div>
               
-              {/* CTA buttons with hover effects */}
+              {/* Enhanced CTA buttons with premium hover effects */}
               <div className="flex flex-wrap gap-4 animate-fade-in" style={{animationDelay: "0.9s"}}>
                 <Button 
                   size="lg" 
-                  onClick={() => scrollToSection('contact')}
+                  onClick={() => scrollToSection('services')}
                   className="bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white shadow-lg hover:shadow-blue-900/30 transition-all duration-300 group"
                 >
-                  Contact Us
+                  Our Services
                   <ArrowRightIcon className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
                 </Button>
                 
                 <Button 
                   size="lg" 
                   variant="outline" 
-                  onClick={() => scrollToSection('services')}
+                  onClick={() => scrollToSection('about')}
                   className="border-white/30 bg-white/5 backdrop-blur-sm text-white hover:bg-white/10 transition-all duration-300 group"
                 >
-                  Our Services
+                  About Us
                   <ChevronRightIcon className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
                 </Button>
               </div>
               
-              {/* Stats with counters */}
+              {/* Enhanced Stats with premium counters */}
               <div className="grid grid-cols-3 gap-6 pt-8 mt-6 border-t border-white/10 animate-fade-in" style={{animationDelay: "1.1s"}}>
-                <div className="text-center p-3 backdrop-blur-sm bg-white/5 rounded-lg hover:bg-white/10 transition-all duration-300">
+                <div className="text-center p-3 backdrop-blur-sm bg-white/5 rounded-lg hover:bg-white/10 transition-all duration-300 hover:transform hover:scale-105">
                   <div className="text-3xl font-bold text-white">15+</div>
                   <div className="text-blue-200/70 text-sm">Years Experience</div>
                 </div>
-                <div className="text-center p-3 backdrop-blur-sm bg-white/5 rounded-lg hover:bg-white/10 transition-all duration-300">
+                <div className="text-center p-3 backdrop-blur-sm bg-white/5 rounded-lg hover:bg-white/10 transition-all duration-300 hover:transform hover:scale-105">
                   <div className="text-3xl font-bold text-white">1000+</div>
                   <div className="text-blue-200/70 text-sm">Happy Clients</div>
                 </div>
-                <div className="text-center p-3 backdrop-blur-sm bg-white/5 rounded-lg hover:bg-white/10 transition-all duration-300">
+                <div className="text-center p-3 backdrop-blur-sm bg-white/5 rounded-lg hover:bg-white/10 transition-all duration-300 hover:transform hover:scale-105">
                   <div className="text-3xl font-bold text-white">100%</div>
                   <div className="text-blue-200/70 text-sm">Success Rate</div>
                 </div>
               </div>
             </div>
             
-            {/* Right Content - Premium 3D card effect */}
+            {/* Right Content - Enhanced Premium 3D card effect */}
             <div className="relative hidden lg:flex justify-center perspective-1000 animate-scale-fade-in">
               <div className="w-full max-w-md transform rotate-y-12 hover:rotate-y-0 transition-all duration-700 group">
-                {/* Premium card with glass effect */}
+                {/* Enhanced Premium card with glass effect */}
                 <div className="bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-lg p-8 rounded-2xl border border-white/20 shadow-2xl transform transition-all duration-500 group-hover:shadow-blue-500/20">
                   <div className="flex justify-between items-start mb-8">
                     <div>
@@ -382,7 +381,7 @@ const Landing: React.FC = () => {
                   <div className="mt-8 pt-6 border-t border-white/10">
                     <Button 
                       className="w-full bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white shadow-lg transition-all duration-300"
-                      onClick={() => scrollToSection('contact')}
+                      onClick={() => scrollToSection('services')}
                     >
                       Get Started
                       <ArrowRightIcon className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -394,7 +393,7 @@ const Landing: React.FC = () => {
           </div>
         </div>
         
-        {/* Animated scroll indicator */}
+        {/* Enhanced Animated scroll indicator */}
         <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce-subtle">
           <div className="flex flex-col items-center text-white/70">
             <span className="text-sm mb-2">Scroll Down</span>
@@ -403,7 +402,7 @@ const Landing: React.FC = () => {
         </div>
       </section>
 
-      {/* About Us Section with Reveal Animations */}
+      {/* Enhanced About Us Section with Reveal Animations */}
       <section id="about" className="py-28 bg-white relative overflow-hidden">
         {/* Subtle background pattern */}
         <div className="absolute inset-0 opacity-5 pattern-dots"></div>
@@ -513,7 +512,7 @@ const Landing: React.FC = () => {
         </div>
       </section>
 
-      {/* Services Section with Cards */}
+      {/* Enhanced Services Section with Premium Cards */}
       <section id="services" className="py-28 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
         {/* Background decorations */}
         <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-blue-100 opacity-40"></div>
@@ -535,7 +534,7 @@ const Landing: React.FC = () => {
             </p>
           </div>
           
-          {/* Premium service cards with hover effects */}
+          {/* Enhanced Premium service cards with luxury hover effects */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {services.map((service, index) => (
               <div 
@@ -560,7 +559,6 @@ const Landing: React.FC = () => {
                   <Button 
                     variant="outline"
                     className="border-blue-200 hover:border-blue-300 text-blue-700 hover:bg-blue-50 group mt-auto"
-                    onClick={() => scrollToSection('contact')}
                   >
                     <span>Learn More</span>
                     <ArrowRightIcon className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
@@ -568,40 +566,6 @@ const Landing: React.FC = () => {
                 </div>
               </div>
             ))}
-          </div>
-          
-          {/* Additional services in 3-column grid */}
-          <div className="mt-16 pt-16 border-t border-gray-200">
-            <div className="text-center mb-12">
-              <h3 className="text-3xl font-bold text-gray-900">Additional Services</h3>
-              <p className="text-gray-600 mt-2">Comprehensive solutions for all your travel needs</p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 text-center">
-                <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <FileTextIcon className="text-blue-700 w-6 h-6" />
-                </div>
-                <h4 className="text-lg font-semibold mb-2">Visa Services</h4>
-                <p className="text-gray-600">Expert assistance for all types of visa applications with high success rate.</p>
-              </div>
-              
-              <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 text-center">
-                <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <GlobeIcon className="text-blue-700 w-6 h-6" />
-                </div>
-                <h4 className="text-lg font-semibold mb-2">Overseas Jobs</h4>
-                <p className="text-gray-600">Connect with international employers through our professional job consultancy.</p>
-              </div>
-              
-              <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 text-center">
-                <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <CheckIcon className="text-blue-700 w-6 h-6" />
-                </div>
-                <h4 className="text-lg font-semibold mb-2">Travel Insurance</h4>
-                <p className="text-gray-600">Comprehensive travel insurance packages for worry-free journeys.</p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -683,7 +647,7 @@ const Landing: React.FC = () => {
         </div>
       </section>
 
-      {/* Redesigned Premium Testimonial Section */}
+      {/* Enhanced Premium Testimonial Section - Redesigned without photos */}
       <section id="testimonials" className="py-28 bg-gradient-to-br from-gray-900 via-blue-950 to-gray-900 relative overflow-hidden">
         {/* Background elements */}
         <div className="absolute inset-0">
@@ -712,59 +676,59 @@ const Landing: React.FC = () => {
           </div>
           
           <div className="max-w-6xl mx-auto">
-            {/* Premium testimonial carousel */}
+            {/* Premium testimonial carousel - redesigned luxury testimonial cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {testimonials.map((testimonial, index) => (
                 <div 
                   key={index}
                   className={cn(
-                    "bg-white/10 backdrop-blur-md rounded-xl p-8 border border-white/10 transition-all duration-500",
+                    "bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md rounded-xl p-8 border transition-all duration-500",
                     index === activeTestimonial 
                       ? "transform scale-105 shadow-xl border-blue-500/30" 
-                      : "hover:bg-white/15 hover:-translate-y-2 cursor-pointer"
+                      : "border-white/10 hover:bg-white/15 hover:-translate-y-2 cursor-pointer"
                   )}
                   onClick={() => setActiveTestimonial(index)}
                 >
-                  {/* Premium quote mark */}
-                  <div className="mb-6">
-                    <svg className="w-12 h-12 text-white/10" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                      <path d="M464 256h-80v-64c0-35.3 28.7-64 64-64h8c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24h-8c-88.4 0-160 71.6-160 160v240c0 26.5 21.5 48 48 48h128c26.5 0 48-21.5 48-48V304c0-26.5-21.5-48-48-48zm-288 0H96v-64c0-35.3 28.7-64 64-64h8c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24h-8C71.6 32 0 103.6 0 192v240c0 26.5 21.5 48 48 48h128c26.5 0 48-21.5 48-48V304c0-26.5-21.5-48-48-48z"></path>
-                    </svg>
+                  {/* Enhanced quote mark */}
+                  <div className="mb-6 flex justify-center">
+                    <div className="bg-gradient-to-r from-blue-600 to-blue-800 w-12 h-12 rounded-full flex items-center justify-center">
+                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                      </svg>
+                    </div>
                   </div>
                   
-                  {/* Rating stars */}
-                  <div className="flex mb-4">
+                  {/* Premium rating stars */}
+                  <div className="flex justify-center mb-6">
                     {[...Array(5)].map((_, i) => (
-                      <StarIcon key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                      <StarIcon key={i} className="w-5 h-5 text-yellow-400 fill-current mx-0.5" />
                     ))}
                   </div>
                   
-                  {/* Quote */}
-                  <p className="text-white/90 text-lg mb-6 italic leading-relaxed">
+                  {/* Enhanced Quote with luxury styling */}
+                  <p className="text-white/90 text-lg mb-6 italic leading-relaxed text-center">
                     "{testimonial.quote}"
                   </p>
                   
-                  {/* Client info */}
-                  <div className="mt-6 pt-6 border-t border-white/10">
-                    <div className="flex justify-between items-center">
-                      <div>
-                        <p className="font-semibold text-white">{testimonial.name}</p>
-                        <p className="text-blue-200/70">{testimonial.location}</p>
-                      </div>
-                      
-                      {/* Animated indicator for active testimonial */}
-                      {index === activeTestimonial && (
-                        <div className="w-3 h-3 rounded-full bg-blue-500 relative">
-                          <span className="absolute inset-0 rounded-full bg-blue-500 animate-ping opacity-75"></span>
-                        </div>
-                      )}
-                    </div>
+                  {/* Client info with premium design */}
+                  <div className="mt-6 pt-6 border-t border-white/10 text-center">
+                    <p className="font-semibold text-white text-xl mb-1">{testimonial.name}</p>
+                    <p className="text-blue-200/70">{testimonial.location}</p>
                   </div>
+                  
+                  {/* Animated indicator for active testimonial */}
+                  {index === activeTestimonial && (
+                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+                      <div className="w-3 h-3 rounded-full bg-blue-500 relative">
+                        <span className="absolute inset-0 rounded-full bg-blue-500 animate-ping opacity-75"></span>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
             
-            {/* Testimonial navigation */}
+            {/* Enhanced Testimonial navigation */}
             <div className="flex justify-center space-x-3 mt-10">
               {testimonials.map((_, index) => (
                 <button 
@@ -852,101 +816,117 @@ const Landing: React.FC = () => {
         </div>
       </section>
 
-      {/* Premium Contact Section */}
-      <section id="contact" className="py-28 bg-gradient-to-br from-gray-50 to-white relative">
-        {/* Background elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-white to-transparent"></div>
-          <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-blue-50"></div>
-          <div className="absolute -bottom-48 -left-48 w-96 h-96 rounded-full bg-blue-50"></div>
-        </div>
+      {/* Meet the Owner Section - New section replacing contact form */}
+      <section className="py-28 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
+        <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-blue-100 opacity-30"></div>
+        <div className="absolute -bottom-40 -right-40 w-96 h-96 rounded-full bg-blue-100 opacity-20"></div>
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
             <div className="inline-block">
               <span className="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
-                Get in Touch
+                Meet Our Founder
               </span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-4">
-              Contact <span className="text-blue-700">Us</span>
+              The <span className="text-blue-700">Leadership</span> Behind Aasia Consultancy
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-blue-800 mx-auto mt-6"></div>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto mt-6">
-              Visit our office in Pattukottai or contact us through phone, email, or WhatsApp.
-            </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
-            {/* Map with premium shadow */}
-            <div className="h-full">
-              <div className="rounded-xl overflow-hidden shadow-2xl h-full hover:shadow-blue-200 transition-shadow duration-300 border border-gray-100">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15758.141134665786!2d79.3134068!3d10.4349715!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5532b3deaf51f3%3A0x7f48afb11d8b23d4!2sPattukottai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1621234567890!5m2!1sen!2sin"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0, minHeight: "400px" }}
-                  allowFullScreen={true}
-                  loading="lazy"
-                  title="Aasia Consultancy Location"
-                  className="grayscale hover:grayscale-0 transition-all duration-500"
-                ></iframe>
+          <div className="max-w-5xl mx-auto">
+            <div className="flex flex-col md:flex-row items-center gap-16">
+              {/* Owner Image with premium styling */}
+              <div className="w-full md:w-1/2">
+                <div className="relative group">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-blue-800 rounded-3xl blur-lg opacity-75 group-hover:opacity-100 transition duration-1000"></div>
+                  <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                    <img 
+                      src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7" 
+                      alt="Aasia Consultancy Founder" 
+                      className="w-full h-auto object-cover transform group-hover:scale-105 transition-all duration-700"
+                    />
+                  </div>
+                  
+                  {/* Decorative elements */}
+                  <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-blue-100 rounded-full opacity-50 z-0"></div>
+                  <div className="absolute -top-6 -left-6 w-24 h-24 bg-blue-100 rounded-full opacity-30 z-0"></div>
+                </div>
+              </div>
+              
+              {/* Owner details with premium styling */}
+              <div className="w-full md:w-1/2">
+                <h3 className="text-3xl font-bold text-gray-900 mb-3">Rahul Singh</h3>
+                <p className="text-blue-700 text-lg font-medium mb-6">Founder & CEO</p>
+                
+                <p className="text-gray-700 text-lg leading-relaxed mb-6">
+                  With over 20 years of experience in the travel industry, Rahul founded Aasia Consultancy in 2010 with a vision to provide exceptional travel services to the people of Pattukottai.
+                </p>
+                
+                <p className="text-gray-700 text-lg leading-relaxed mb-8">
+                  His extensive knowledge of travel documentation, visa procedures, and international travel regulations has helped thousands of clients fulfill their travel dreams with ease and confidence.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row sm:items-center gap-6">
+                  <Button className="bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 shadow-lg group">
+                    Contact Directly
+                    <ArrowRightIcon className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                  
+                  {/* Contact information with icons */}
+                  <div className="flex items-center gap-6">
+                    <a href="tel:+919876543210" className="flex items-center gap-2 text-gray-700 hover:text-blue-700 transition-colors">
+                      <div className="bg-blue-100 p-2 rounded-full">
+                        <PhoneIcon className="w-4 h-4 text-blue-700" />
+                      </div>
+                      <span>+91 98765 43210</span>
+                    </a>
+                    
+                    <a href="mailto:founder@aasiaconsultancy.com" className="flex items-center gap-2 text-gray-700 hover:text-blue-700 transition-colors">
+                      <div className="bg-blue-100 p-2 rounded-full">
+                        <InfoIcon className="w-4 h-4 text-blue-700" />
+                      </div>
+                      <span>Email</span>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
             
-            {/* Contact cards */}
-            <div className="space-y-6">
-              {/* Contact Form */}
-              <Card className="overflow-hidden shadow-lg border-0">
-                <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-800 text-white">
-                  <CardTitle>Send us a message</CardTitle>
-                  <CardDescription className="text-blue-100">We'll get back to you within 24 hours</CardDescription>
-                </CardHeader>
-                <CardContent className="pt-6">
-                  <form className="space-y-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Input placeholder="Your Name" className="border-gray-300 focus:border-blue-500" />
-                      </div>
-                      <div className="space-y-2">
-                        <Input placeholder="Email Address" type="email" className="border-gray-300 focus:border-blue-500" />
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <Input placeholder="Subject" className="border-gray-300 focus:border-blue-500" />
-                    </div>
-                    <div className="space-y-2">
-                      <Textarea placeholder="Your Message" className="border-gray-300 focus:border-blue-500 min-h-[120px]" />
-                    </div>
-                    <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900">
-                      Send Message
-                    </Button>
-                  </form>
-                </CardContent>
-              </Card>
-              
-              {/* Contact Info Cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow duration-300 border border-gray-100">
-                  <div className="flex items-start gap-4">
-                    <div className="bg-gradient-to-r from-blue-600 to-blue-800 p-3 rounded-lg shadow-md text-white">
-                      <MapPin className="w-6 h-6" />
+            {/* Location information */}
+            <div className="mt-20 bg-blue-50 p-8 rounded-2xl shadow-lg border border-blue-100">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Visit Our Office</h3>
+              <div className="flex flex-col md:flex-row items-center gap-8">
+                <div className="w-full md:w-2/3 h-64 md:h-80 rounded-xl overflow-hidden shadow-lg">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15758.141134665786!2d79.3134068!3d10.4349715!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5532b3deaf51f3%3A0x7f48afb11d8b23d4!2sPattukottai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1621234567890!5m2!1sen!2sin"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen={true}
+                    loading="lazy"
+                    title="Aasia Consultancy Location"
+                    className="grayscale hover:grayscale-0 transition-all duration-500"
+                  ></iframe>
+                </div>
+                <div className="w-full md:w-1/3">
+                  <div className="flex items-start gap-4 mb-6">
+                    <div className="bg-gradient-to-r from-blue-600 to-blue-800 p-3 rounded-lg text-white">
+                      <MapPin className="w-5 h-5" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900 text-lg">Our Address</h3>
+                      <h4 className="font-semibold text-gray-900 text-lg">Our Address</h4>
                       <p className="text-gray-600 mt-1">Aasia Consultancy,<br/>Main Street, Pattukottai,<br/>Tamil Nadu, India</p>
                     </div>
                   </div>
-                </div>
-                
-                <div className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow duration-300 border border-gray-100">
+                  
                   <div className="flex items-start gap-4">
-                    <div className="bg-gradient-to-r from-blue-600 to-blue-800 p-3 rounded-lg shadow-md text-white">
-                      <PhoneIcon className="w-6 h-6" />
+                    <div className="bg-gradient-to-r from-blue-600 to-blue-800 p-3 rounded-lg text-white">
+                      <CalendarIcon className="w-5 h-5" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900 text-lg">Contact Info</h3>
-                      <p className="text-gray-600 mt-1">+91 98765 43210<br/>info@aasiaconsultancy.com</p>
+                      <h4 className="font-semibold text-gray-900 text-lg">Business Hours</h4>
+                      <p className="text-gray-600 mt-1">Monday to Saturday<br/>9:00 AM - 6:00 PM</p>
                     </div>
                   </div>
                 </div>
@@ -1024,12 +1004,6 @@ const Landing: React.FC = () => {
                   <button onClick={() => scrollToSection('testimonials')} className="text-blue-200/80 hover:text-white transition-colors flex items-center">
                     <ChevronRightIcon className="w-4 h-4 mr-2" />
                     <span>Testimonials</span>
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => scrollToSection('contact')} className="text-blue-200/80 hover:text-white transition-colors flex items-center">
-                    <ChevronRightIcon className="w-4 h-4 mr-2" />
-                    <span>Contact</span>
                   </button>
                 </li>
               </ul>
