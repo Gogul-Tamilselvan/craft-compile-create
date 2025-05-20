@@ -506,55 +506,7 @@ const Landing: React.FC = () => {
               </CardContent>
             </Card>
             
-            {/* Visa Services */}
-            <Card className="overflow-hidden group hover:shadow-xl transition-all duration-300 border-t-4 border-transparent hover:border-t-blue-600">
-              <CardHeader className="pb-2">
-                <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <FileTextIcon className="text-blue-700 w-8 h-8 group-hover:rotate-12 transition-transform duration-300" />
-                </div>
-                <CardTitle>Visa Services</CardTitle>
-                <CardDescription>Tourist, Business & Student</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 mb-4">
-                  Expert guidance for visa applications of all types. We ensure your documentation 
-                  is complete and accurate for approval.
-                </p>
-                <Button 
-                  variant="outline" 
-                  className="text-blue-600 border-blue-600 hover:bg-blue-50 group"
-                  onClick={() => scrollToSection('contact')}
-                >
-                  <span>Learn More</span>
-                  <FileTextIcon className="w-4 h-4 ml-1 transition-all group-hover:translate-x-1" />
-                </Button>
-              </CardContent>
-            </Card>
-            
-            {/* Foreign Agent Services */}
-            <Card className="overflow-hidden group hover:shadow-xl transition-all duration-300 border-t-4 border-transparent hover:border-t-blue-600">
-              <CardHeader className="pb-2">
-                <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <UsersIcon className="text-blue-700 w-8 h-8 group-hover:rotate-12 transition-transform duration-300" />
-                </div>
-                <CardTitle>Foreign Agent Services</CardTitle>
-                <CardDescription>Overseas Job Consultancy</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 mb-4">
-                  Find opportunities abroad with our overseas job consultancy. 
-                  We connect you with reputable employers worldwide.
-                </p>
-                <Button 
-                  variant="outline" 
-                  className="text-blue-600 border-blue-600 hover:bg-blue-50 group"
-                  onClick={() => scrollToSection('contact')}
-                >
-                  <span>Learn More</span>
-                  <UsersIcon className="w-4 h-4 ml-1 transition-all group-hover:translate-x-1" />
-                </Button>
-              </CardContent>
-            </Card>
+          
             
             {/* Travel Consultancy */}
             <Card className="overflow-hidden group hover:shadow-xl transition-all duration-300 border-t-4 border-transparent hover:border-t-blue-600">
