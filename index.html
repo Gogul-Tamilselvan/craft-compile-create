@@ -5,20 +5,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Best Travel Agency in Pattukottai | Aasia Consultancy</title>
-<meta name="description" content="Aasia Consultancy is the best travel agency in Pattukottai. We offer flight ticket booking, visa services, foreign agent support, and more — your trusted travel partner." />
-<meta name="robots" content="index, follow" />
-<link rel="canonical" href="https://AasiaConsultancy.vercel.app/" />
+    <meta name="description" content="Aasia Consultancy is the best travel agency in Pattukottai. We offer flight ticket booking, visa services, foreign agent support, and more — your trusted travel partner." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://AasiaConsultancy.vercel.app/" />
 
-<!-- Open Graph (for Facebook, LinkedIn, etc.) -->
-<meta property="og:title" content="Best Travel Agency in Pattukottai | Aasia Consultancy" />
-<meta property="og:description" content="Flight tickets, visa services, and more — Aasia Consultancy is Pattukottai's trusted travel agency." />
-<meta property="og:url" content="https://AasiaConsultancy.vercel.app/" />
-<meta property="og:type" content="website" />
-<meta name="google-site-verification" content="T-kfLQ3BBceveafrrmJ90z_6DwfqFWY4JQvO2sPT9fA" />
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Best Travel Agency in Pattukottai | Aasia Consultancy" />
-<meta name="twitter:description" content="Looking for travel services in Pattukottai? Aasia Consultancy offers ticket booking, visa help & more." />
+    <!-- Open Graph (for Facebook, LinkedIn, etc.) -->
+    <meta property="og:title" content="Best Travel Agency in Pattukottai | Aasia Consultancy" />
+    <meta property="og:description" content="Flight tickets, visa services, and more — Aasia Consultancy is Pattukottai's trusted travel agency." />
+    <meta property="og:url" content="https://AasiaConsultancy.vercel.app/" />
+    <meta property="og:type" content="website" />
+    <meta name="google-site-verification" content="T-kfLQ3BBceveafrrmJ90z_6DwfqFWY4JQvO2sPT9fA" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Best Travel Agency in Pattukottai | Aasia Consultancy" />
+    <meta name="twitter:description" content="Looking for travel services in Pattukottai? Aasia Consultancy offers ticket booking, visa help & more." />
+    
+    <!-- Preload critical assets -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
+    
+    <!-- Preload critical CSS -->
+    <link rel="preload" href="/src/index.css" as="style">
     
     <style>
       @media print {
@@ -30,11 +37,33 @@
           -webkit-print-color-adjust: exact;
         }
       }
+      
+      /* Critical CSS for initial paint */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: system-ui, -apple-system, sans-serif;
+      }
+      
+      .loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        width: 100%;
+        background: linear-gradient(to bottom right, #1e3a8a, #1e40af);
+        color: white;
+      }
     </style>
   </head>
 
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Minimal loading state to show while React loads -->
+      <div class="loading">
+        <div>Loading Aasia Consultancy...</div>
+      </div>
+    </div>
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>

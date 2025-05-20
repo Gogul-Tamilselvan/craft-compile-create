@@ -36,19 +36,12 @@
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
@@ -100,38 +93,22 @@
     @apply bg-background text-foreground;
     scroll-behavior: smooth;
   }
-
-  /* Smooth transition on scroll for all elements */
-  .scroll-transition {
-    @apply transition-all duration-700 ease-in-out;
-  }
 }
 
-/* Enhanced animations */
+/* Optimized animations - reduced quantity and simplified for performance */
 @keyframes pulse-slow {
   0%, 100% {
     opacity: 0.7;
-    transform: scale(1);
   }
   50% {
     opacity: 0.5;
-    transform: scale(1.05);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
   }
 }
 
 @keyframes scale-fade-in {
   0% {
     opacity: 0;
-    transform: scale(0.9);
+    transform: scale(0.95);
   }
   100% {
     opacity: 1;
@@ -139,32 +116,15 @@
   }
 }
 
-@keyframes bounce-subtle {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
-}
-
 .animate-pulse-slow {
   animation: pulse-slow 5s infinite;
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
 }
 
 .animate-scale-fade-in {
   animation: scale-fade-in 0.7s forwards;
 }
 
-.animate-bounce-subtle {
-  animation: bounce-subtle 2s infinite;
-}
-
-/* Background patterns */
+/* Background patterns - simplified */
 .pattern-dots {
   background-image: radial-gradient(rgba(0, 0, 0, 0.1) 2px, transparent 2px);
   background-size: 20px 20px;
@@ -190,25 +150,16 @@
   }
 }
 
-/* 3D card effects */
-.perspective-1000 {
-  perspective: 1000px;
-}
-
-.rotate-y-12 {
-  transform: rotateY(12deg);
-}
-
-/* Premium glassmorphism effects */
+/* Premium glassmorphism effects - simplified for better performance */
 .glass {
   @apply bg-white/10 backdrop-blur-lg border border-white/20;
 }
 
-/* Smooth reveal animations */
+/* Smooth reveal animations - simplified */
 .reveal {
   opacity: 0;
   transform: translateY(20px);
-  transition: all 1s ease;
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
 .reveal.active {
@@ -216,7 +167,7 @@
   transform: translateY(0);
 }
 
-/* Cool hover effects */
+/* Hover effects - simplified */
 .hover-lift {
   transition: transform 0.3s ease;
 }
