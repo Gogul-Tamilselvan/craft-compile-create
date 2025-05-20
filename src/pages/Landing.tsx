@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -48,20 +49,17 @@ const testimonials = [
   {
     quote: "Aasia Consultancy made our international trip hassle-free. Their visa and flight booking services are excellent!",
     name: "Ramesh Kumar",
-    location: "Chennai",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format"
+    location: "Chennai"
   },
   {
     quote: "I got my passport renewed through Aasia in just 7 days. Their expertise in documentation saved me a lot of time!",
     name: "Priya Sharma",
-    location: "Thanjavur",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format"
+    location: "Thanjavur"
   },
   {
     quote: "The overseas job consultancy team helped me secure a position in Dubai. Very professional service!",
     name: "Abdul Rahman",
-    location: "Pattukottai",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format"
+    location: "Pattukottai"
   },
 ];
 
@@ -147,164 +145,153 @@ const Landing: React.FC = () => {
         </div>
       </nav>
 
-      {/* Redesigned Hero Section */}
-      <section id="home" className="relative pt-24 min-h-screen flex items-center">
-        {/* New geometric background with vibrant gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-500 to-pink-500 overflow-hidden">
-          {/* Abstract geometric shapes */}
-          <div className="absolute w-96 h-96 bg-white/10 rounded-full blur-3xl top-1/4 left-1/4 animate-pulse-slow"></div>
-          <div className="absolute w-64 h-64 bg-purple-300/20 rounded-full blur-2xl bottom-1/3 right-1/3 animate-pulse-slow" style={{animationDelay: "1s", animationDuration: "7s"}}></div>
-          <div className="absolute w-80 h-80 bg-pink-300/20 rounded-full blur-2xl top-1/3 right-1/4 animate-pulse-slow" style={{animationDelay: "2s", animationDuration: "10s"}}></div>
+      {/* Redesigned Premium Hero Section */}
+      <section id="home" className="relative pt-20 min-h-screen flex items-center">
+        {/* Premium gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-r from-gray-900 to-blue-900 overflow-hidden">
+          {/* Subtle pattern overlay */}
+          <div className="absolute inset-0 opacity-20" style={{backgroundImage: "url('data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M54.627 0l.83.828-1.415 1.415L51.8 0h2.827zM5.373 0l-.83.828L5.96 2.243 8.2 0H5.374zM48.97 0l3.657 3.657-1.414 1.414L46.143 0h2.828zM11.03 0L7.372 3.657 8.787 5.07 13.857 0H11.03zm32.284 0L49.8 6.485 48.384 7.9l-7.9-7.9h2.83zM16.686 0L10.2 6.485 11.616 7.9l7.9-7.9h-2.83zm20.97 0l9.315 9.314-1.414 1.414L34.828 0h2.83zM22.344 0L13.03 9.314l1.414 1.414L25.172 0h-2.83zM32 0l12.142 12.142-1.414 1.414L30 .828 17.272 13.556l-1.414-1.414L28 0h4zM.284 0l28 28-1.414 1.414L0 2.544v-2.26zM0 5.373l25.456 25.455-1.414 1.415L0 8.2V5.374zm0 5.656l22.627 22.627-1.414 1.414L0 13.86v-2.83zm0 5.656l19.8 19.8-1.415 1.413L0 19.514v-2.83zm0 5.657l16.97 16.97-1.414 1.415L0 25.172v-2.83zM0 28l14.142 14.142-1.414 1.414L0 30.828V28zm0 5.657L11.314 44.97l-1.414 1.414L0 36.485v-2.83zm0 5.657L8.485 47.8l-1.414 1.414L0 42.142v-2.83zm0 5.657l5.657 5.657-1.414 1.415L0 47.8v-2.83zm0 5.657l2.828 2.83-1.414 1.413L0 53.456v-2.83zM54.627 60L30 35.373 5.373 60H8.2L30 38.2 51.8 60h2.827zm-5.656 0L30 41.03 11.03 60h2.828L30 43.858 46.142 60h2.83zm-5.656 0L30 46.686 16.686 60h2.83L30 49.515 40.485 60h2.83zm-5.657 0L30 52.343 22.343 60h2.83L30 55.172 34.828 60h2.83zM32 60l-2-2-2 2h4zM59.716 0l-28 28 1.414 1.414L60 2.544V0h-.284zM60 5.373L34.544 30.828l1.414 1.415L60 8.2V5.374zm0 5.656L37.373 33.656l1.414 1.414L60 13.86v-2.83zm0 5.656l-19.8 19.8 1.415 1.413L60 19.514v-2.83zm0 5.657l-16.97 16.97 1.414 1.415L60 25.172v-2.83zM60 28L45.858 42.142l1.414 1.414L60 30.828V28zm0 5.657L48.686 44.97l1.414 1.414L60 36.485v-2.83zm0 5.657L51.515 47.8l1.414 1.414L60 42.142v-2.83zm0 5.657l-5.657 5.657 1.414 1.415L60 47.8v-2.83zm0 5.657l-2.828 2.83 1.414 1.413L60 53.456v-2.83zM39.9 16.385l1.414-1.414L30 3.658 18.686 14.97l1.415 1.415 9.9-9.9 9.9 9.9zm-2.83 2.828l1.415-1.414L30 9.313 21.515 17.8l1.414 1.413L30 11.8l7.07 7.07zm-2.827 2.83l1.414-1.416L30 14.97l-5.657 5.657 1.414 1.415L30 17.8l4.243 4.242zm-2.83 2.827l1.415-1.414L30 20.626l-2.828 2.83 1.414 1.414L30 23.456l1.414 1.414zM56.87 59.414L58.284 58 30 29.716 1.716 58l1.414 1.414L30 32.544l26.87 26.87z' fill='%23ffffff' fill-opacity='0.15' fill-rule='evenodd'/%3E%3C/svg%3E")}}</div>
           
-          {/* Floating elements with animations */}
-          <div className="hidden md:block">
-            <div className="absolute top-24 left-[15%] animate-float" style={{animationDuration: "15s"}}>
-              <PlaneIcon className="w-14 h-14 text-white/40 transform rotate-45" />
-            </div>
-            <div className="absolute bottom-32 left-[20%] animate-float" style={{animationDuration: "12s", animationDelay: "1s"}}>
-              <LuggageIcon className="w-10 h-10 text-white/30" />
-            </div>
-            <div className="absolute top-1/2 right-[15%] animate-float" style={{animationDuration: "18s", animationDelay: "2s"}}>
-              <TicketIcon className="w-12 h-12 text-white/30 transform -rotate-12" />
-            </div>
-            <div className="absolute bottom-1/4 right-[25%] animate-float" style={{animationDuration: "20s", animationDelay: "3s"}}>
-              <GlobeIcon className="w-16 h-16 text-white/20" />
-            </div>
-          </div>
-          
-          {/* Animated mesh grid pattern */}
-          <div className="absolute inset-0" style={{backgroundImage: "url('data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v20H0V0zm2 2v16h16V2H2z' fill='%23ffffff' fill-opacity='0.05'/%3E%3C/svg%3E')"}}></div>
-          
-          {/* Radial overlay for depth */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-blue-900/70"></div>
+          {/* Subtle animated light effect */}
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-blue-400/10 blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-blue-300/10 blur-3xl animate-pulse" style={{animationDelay: "1.5s"}}></div>
         </div>
         
-        {/* Hero Content */}
+        {/* Content Container */}
         <div className="container mx-auto px-4 relative z-10">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            {/* Left Content - Text and CTA */}
-            <div className="w-full md:w-1/2 text-white space-y-8 py-16 md:py-0">
-              <div className="space-y-4">
-                <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-tight animate-fade-in" style={{animationDelay: "0.3s"}}>
-                  <span className="block">Your Gateway to</span>
-                  <span className="block bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">Seamless Travel</span>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left Content */}
+            <div className="text-white space-y-8">
+              <div className="space-y-4 max-w-xl">
+                <div className="inline-block">
+                  <span className="px-3 py-1 bg-blue-600/30 text-blue-200 text-sm font-medium rounded-full backdrop-blur-sm border border-blue-400/20">
+                    Premier Travel Solutions
+                  </span>
+                </div>
+                
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
+                  <span className="block">Experience Travel</span>
+                  <span className="block mt-2 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">Without Boundaries</span>
                 </h1>
                 
-                <p className="text-xl md:text-2xl mt-6 text-blue-100 max-w-lg animate-fade-in" style={{animationDelay: "0.6s"}}>
-                  Experience hassle-free travel planning with Pattukottai's premier travel consultancy
+                <p className="text-lg sm:text-xl text-blue-100/80 max-w-lg">
+                  Elevate your journey with Pattukottai's most trusted travel consultancy. Seamless service from documentation to destination.
                 </p>
               </div>
               
-              <div className="flex flex-wrap gap-6 animate-fade-in" style={{animationDelay: "0.9s"}}>
+              <div className="flex flex-wrap gap-4">
                 <Button 
                   size="lg" 
                   onClick={() => scrollToSection('contact')}
-                  className="bg-white text-blue-600 hover:bg-blue-50 shadow-lg hover:shadow-xl transition-all duration-300 group"
+                  className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-blue-900/30 transition-all duration-300"
                 >
-                  <span>Contact Us</span>
-                  <PhoneIcon className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                  Contact Us
+                  <PhoneIcon className="w-4 h-4 ml-2" />
                 </Button>
                 
                 <Button 
                   size="lg" 
-                  variant="outline"
+                  variant="outline" 
                   onClick={() => scrollToSection('services')}
-                  className="border-white text-white hover:bg-white/20 transition-all duration-300"
+                  className="border-white/30 bg-white/5 backdrop-blur-sm text-white hover:bg-white/10 transition-all duration-300"
                 >
-                  <span>Explore Services</span>
+                  Explore Services
                   <CompassIcon className="w-4 h-4 ml-2" />
                 </Button>
               </div>
               
-              {/* Highlight Icons */}
-              <div className="grid grid-cols-3 gap-4 pt-8 animate-fade-in" style={{animationDelay: "1.2s"}}>
-                <div className="flex flex-col items-center">
-                  <div className="bg-white/10 w-14 h-14 rounded-full flex items-center justify-center backdrop-blur-sm mb-2">
-                    <GlobeIcon className="w-7 h-7 text-white" />
-                  </div>
-                  <p className="text-sm font-medium text-center">Global Service</p>
+              {/* Stats section */}
+              <div className="grid grid-cols-3 gap-6 pt-8 mt-6 border-t border-white/10">
+                <div>
+                  <div className="text-3xl font-bold">15+</div>
+                  <div className="text-blue-200/70 text-sm">Years Experience</div>
                 </div>
-                
-                <div className="flex flex-col items-center">
-                  <div className="bg-white/10 w-14 h-14 rounded-full flex items-center justify-center backdrop-blur-sm mb-2">
-                    <CheckIcon className="w-7 h-7 text-white" />
-                  </div>
-                  <p className="text-sm font-medium text-center">100% Success</p>
+                <div>
+                  <div className="text-3xl font-bold">1000+</div>
+                  <div className="text-blue-200/70 text-sm">Happy Clients</div>
                 </div>
-                
-                <div className="flex flex-col items-center">
-                  <div className="bg-white/10 w-14 h-14 rounded-full flex items-center justify-center backdrop-blur-sm mb-2">
-                    <CalendarIcon className="w-7 h-7 text-white" />
-                  </div>
-                  <p className="text-sm font-medium text-center">Quick Process</p>
+                <div>
+                  <div className="text-3xl font-bold">100%</div>
+                  <div className="text-blue-200/70 text-sm">Success Rate</div>
                 </div>
               </div>
             </div>
             
-            {/* Right Content - Floating 3D Cards */}
-            <div className="w-full md:w-1/2 relative mt-12 md:mt-0 animate-fade-in" style={{animationDelay: "0.6s"}}>
-              <div className="relative max-w-xl mx-auto">
-                {/* Main Card */}
-                <div className="relative z-30 transform transition-all duration-500 hover:rotate-y-6 hover:scale-105 shadow-2xl rounded-xl overflow-hidden mx-auto">
-                  <img 
-                    src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&auto=format&q=75" 
-                    alt="Travel Destinations"
-                    className="w-full object-cover h-96"
-                    loading="eager"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 to-transparent flex flex-col justify-end p-6">
-                    <h3 className="text-2xl font-bold text-white">World-class Service</h3>
-                    <p className="text-blue-100">Your journey begins with us</p>
+            {/* Right Content - Premium card display */}
+            <div className="hidden lg:block relative">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-80 h-80 rounded-full bg-gradient-to-r from-blue-500/20 to-blue-700/20 blur-3xl"></div>
+              </div>
+              
+              <div className="relative">
+                {/* Main card */}
+                <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 shadow-xl transform transition-transform duration-500 hover:scale-[1.02] max-w-md mx-auto">
+                  <div className="flex justify-between items-start mb-8">
+                    <div>
+                      <h3 className="text-white text-xl font-semibold">Premium Travel Services</h3>
+                      <p className="text-blue-100/70">Tailored to your needs</p>
+                    </div>
+                    <div className="bg-blue-600/30 p-3 rounded-full backdrop-blur-sm">
+                      <GlobeIcon className="w-6 h-6 text-white" />
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3">
+                      <div className="bg-blue-500/20 p-2 rounded-full">
+                        <CheckIcon className="w-4 h-4 text-blue-300" />
+                      </div>
+                      <p className="text-white">International Flight Bookings</p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="bg-blue-500/20 p-2 rounded-full">
+                        <CheckIcon className="w-4 h-4 text-blue-300" />
+                      </div>
+                      <p className="text-white">Express Passport Services</p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="bg-blue-500/20 p-2 rounded-full">
+                        <CheckIcon className="w-4 h-4 text-blue-300" />
+                      </div>
+                      <p className="text-white">Visa Application Assistance</p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="bg-blue-500/20 p-2 rounded-full">
+                        <CheckIcon className="w-4 h-4 text-blue-300" />
+                      </div>
+                      <p className="text-white">Overseas Job Consultancy</p>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-8 pt-6 border-t border-white/10">
+                    <Button 
+                      className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white"
+                      onClick={() => scrollToSection('contact')}
+                    >
+                      Get Started Now
+                    </Button>
                   </div>
                 </div>
                 
-                {/* Floating Card 1 */}
-                <div className="absolute top-14 -left-5 md:-left-20 z-20 transform -rotate-6 shadow-xl rounded-lg overflow-hidden w-48 h-64 animate-float" style={{animationDuration: "10s"}}>
-                  <img 
-                    src="https://images.unsplash.com/photo-1488085061387-422e29b40080?w=300&auto=format&q=75" 
-                    alt="Passport and Travel Documents" 
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-blue-900/70 to-transparent"></div>
-                  <div className="absolute bottom-3 left-3">
-                    <FileTextIcon className="text-white w-6 h-6" />
-                  </div>
-                </div>
-                
-                {/* Floating Card 2 */}
-                <div className="absolute -bottom-5 -right-5 md:-right-10 z-10 transform rotate-6 shadow-xl rounded-lg overflow-hidden w-56 h-40 animate-float" style={{animationDuration: "15s", animationDelay: "2s"}}>
-                  <img 
-                    src="https://images.unsplash.com/photo-1530521954074-e64f6810b32d?w=300&auto=format&q=75" 
-                    alt="Travel Planning" 
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-blue-900/70 to-transparent"></div>
-                  <div className="absolute bottom-3 left-3">
-                    <PlaneIcon className="text-white w-6 h-6" />
-                  </div>
-                </div>
-                
-                {/* Glowing Light Effects */}
-                <div className="absolute -top-20 -left-20 w-40 h-40 bg-blue-400/30 rounded-full blur-3xl"></div>
-                <div className="absolute -bottom-20 -right-20 w-60 h-60 bg-purple-500/20 rounded-full blur-3xl"></div>
+                {/* Decorative elements */}
+                <div className="absolute -bottom-4 -right-4 w-28 h-28 bg-blue-600/20 rounded-full blur-xl"></div>
+                <div className="absolute -top-6 -left-6 w-24 h-24 bg-blue-400/20 rounded-full blur-lg"></div>
               </div>
             </div>
           </div>
-          
-          {/* Scroll indicator */}
-          <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce" style={{ animationDuration: "2s" }}>
-            <span className="text-white text-sm mb-2">Scroll Down</span>
-            <div className="w-6 h-6 border-b-2 border-r-2 border-white transform rotate-45"></div>
-          </div>
+        </div>
+        
+        {/* Scroll indicator */}
+        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce">
+          <span className="text-white/70 text-sm mb-2">Scroll Down</span>
+          <div className="w-6 h-6 border-b-2 border-r-2 border-white/70 transform rotate-45"></div>
         </div>
       </section>
 
       {/* About Us Section */}
       <section id="about" className="py-24 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12 transform transition-all duration-500 hover:scale-105">
+          <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800">About Aasia Consultancy</h2>
             <div className="w-24 h-1 bg-blue-600 mx-auto mt-4 mb-6"></div>
           </div>
@@ -316,6 +303,7 @@ const Landing: React.FC = () => {
                     src="https://images.unsplash.com/photo-1577017040065-650ee4d43339" 
                     alt="Aasia Consultancy Office" 
                     className="rounded-lg shadow-lg w-full hover:shadow-2xl transition-shadow duration-300"
+                    loading="lazy"
                   />
                   <div className="absolute -bottom-4 -right-4 bg-blue-600 text-white p-4 rounded-lg shadow-lg">
                     <p className="font-bold">Established 2010</p>
@@ -352,7 +340,7 @@ const Landing: React.FC = () => {
         </div>
       </section>
 
-      {/* Services Section with 3 columns only */}
+      {/* Services Section with 3 columns */}
       <section id="services" className="py-24">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
@@ -484,7 +472,7 @@ const Landing: React.FC = () => {
         </div>
       </section>
 
-      {/* Testimonial Section */}
+      {/* Redesigned Testimonial Section */}
       <section id="testimonials" className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
@@ -493,97 +481,58 @@ const Landing: React.FC = () => {
           </div>
           
           <div className="max-w-4xl mx-auto">
-            {/* Testimonial carousel */}
-            <div className="relative bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg shadow-2xl overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-full opacity-10">
-                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1528127269322-539801943592')] bg-cover bg-center"></div>
-                <div className="absolute inset-0 bg-blue-900/50"></div>
-              </div>
-              
-              {/* Quote icons */}
-              <div className="absolute top-4 left-4 text-white/20">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z"/>
-                </svg>
-              </div>
-              
-              <div className="px-8 md:px-12 py-12 md:py-16 relative z-10">
-                <div className="flex flex-col md:flex-row items-center gap-8">
-                  {/* Testimonial content slider */}
-                  <div className="w-full md:w-3/4 text-white">
-                    <div className="relative h-48">
-                      {testimonials.map((testimonial, index) => (
-                        <div 
-                          key={index} 
-                          className={`absolute inset-0 transition-all duration-500 ${
-                            index === activeTestimonial 
-                              ? 'opacity-100 translate-x-0' 
-                              : 'opacity-0 translate-x-8'
-                          }`}
-                        >
-                          <p className="text-xl italic mb-6">{testimonial.quote}</p>
-                          <div>
-                            <p className="font-bold text-lg">{testimonial.name}</p>
-                            <p className="text-blue-100">{testimonial.location}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    
-                    {/* Testimonial navigation */}
-                    <div className="flex justify-center md:justify-start space-x-2 mt-6">
-                      {testimonials.map((_, index) => (
-                        <button 
-                          key={index}
-                          onClick={() => setActiveTestimonial(index)}
-                          className={`w-3 h-3 rounded-full transition-all ${
-                            index === activeTestimonial 
-                              ? 'bg-white scale-125' 
-                              : 'bg-white/40 hover:bg-white/60'
-                          }`}
-                          aria-label={`View testimonial ${index + 1}`}
-                        />
-                      ))}
-                    </div>
+            {/* Premium testimonial carousel */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {testimonials.map((testimonial, index) => (
+                <div 
+                  key={index}
+                  className={`bg-white rounded-lg p-8 shadow-lg border border-gray-100 transition-all duration-500 ${
+                    index === activeTestimonial 
+                      ? "ring-2 ring-blue-500 ring-offset-2 transform scale-105" 
+                      : "hover:shadow-xl hover:-translate-y-1"
+                  }`}
+                  onClick={() => setActiveTestimonial(index)}
+                >
+                  {/* Quote mark */}
+                  <div className="text-blue-100 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" className="opacity-30">
+                      <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z"/>
+                    </svg>
                   </div>
                   
-                  {/* Testimonial image */}
-                  <div className="w-full md:w-1/4 flex justify-center">
-                    <div className="relative">
-                      {testimonials.map((testimonial, index) => (
-                        <div 
-                          key={index} 
-                          className={`absolute inset-0 transition-all duration-500 ${
-                            index === activeTestimonial 
-                              ? 'opacity-100 scale-100' 
-                              : 'opacity-0 scale-90'
-                          }`}
-                        >
-                          <div className="bg-white p-2 rounded-full shadow-lg">
-                            <div className="w-32 h-32 rounded-full overflow-hidden">
-                              <img 
-                                src={testimonial.image} 
-                                alt={testimonial.name}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                          </div>
-                        </div>
+                  <div className="mb-6">
+                    <div className="flex mb-3">
+                      {[...Array(5)].map((_, i) => (
+                        <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                        </svg>
                       ))}
                     </div>
+                    <p className="text-gray-700 italic">{testimonial.quote}</p>
+                  </div>
+                  
+                  <div className="mt-4 pt-4 border-t border-gray-100">
+                    <p className="font-bold text-gray-900">{testimonial.name}</p>
+                    <p className="text-gray-500 text-sm">{testimonial.location}</p>
                   </div>
                 </div>
-                
-                <div className="text-center mt-8">
-                  <Button 
-                    onClick={() => scrollToSection('contact')}
-                    className="bg-white text-blue-600 hover:bg-blue-50 hover:text-blue-700 group"
-                  >
-                    <span>Join Our Satisfied Clients</span>
-                    <CheckIcon className="w-4 h-4 ml-1 group-hover:scale-125 transition-transform" />
-                  </Button>
-                </div>
-              </div>
+              ))}
+            </div>
+            
+            {/* Testimonial navigation */}
+            <div className="flex justify-center space-x-2 mt-8">
+              {testimonials.map((_, index) => (
+                <button 
+                  key={index}
+                  onClick={() => setActiveTestimonial(index)}
+                  className={`w-3 h-3 rounded-full transition-all ${
+                    index === activeTestimonial 
+                      ? 'bg-blue-600 scale-125' 
+                      : 'bg-gray-300 hover:bg-gray-400'
+                  }`}
+                  aria-label={`View testimonial ${index + 1}`}
+                />
+              ))}
             </div>
           </div>
         </div>
@@ -756,33 +705,28 @@ const Landing: React.FC = () => {
                     <path fillRule="evenodd" d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
                   </svg>
                 </a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors hover:scale-110 transform duration-200">
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path fillRule="evenodd" d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 01-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 01-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 01 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418ZM15.194 12 10 15V9l5.194 3Z" clipRule="evenodd" />
-                  </svg>
-                </a>
               </div>
             </div>
             
             <div>
               <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
               <ul className="space-y-2">
-                <li><a onClick={() => scrollToSection('home')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Home</a></li>
-                <li><a onClick={() => scrollToSection('about')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">About Us</a></li>
-                <li><a onClick={() => scrollToSection('services')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Services</a></li>
-                <li><a onClick={() => scrollToSection('testimonials')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Testimonials</a></li>
-                <li><a onClick={() => scrollToSection('contact')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Contact</a></li>
+                <li><button onClick={() => scrollToSection('home')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Home</button></li>
+                <li><button onClick={() => scrollToSection('about')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">About Us</button></li>
+                <li><button onClick={() => scrollToSection('services')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Services</button></li>
+                <li><button onClick={() => scrollToSection('testimonials')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Testimonials</button></li>
+                <li><button onClick={() => scrollToSection('contact')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Contact</button></li>
               </ul>
             </div>
             
             <div>
               <h3 className="text-lg font-semibold mb-4">Services</h3>
               <ul className="space-y-2">
-                <li><a onClick={() => scrollToSection('services')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Flight Booking</a></li>
-                <li><a onClick={() => scrollToSection('services')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Passport Services</a></li>
-                <li><a onClick={() => scrollToSection('services')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Visa Services</a></li>
-                <li><a onClick={() => scrollToSection('services')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Foreign Jobs</a></li>
-                <li><a onClick={() => scrollToSection('services')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Travel Consultancy</a></li>
+                <li><button onClick={() => scrollToSection('services')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Flight Booking</button></li>
+                <li><button onClick={() => scrollToSection('services')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Passport Services</button></li>
+                <li><button onClick={() => scrollToSection('services')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Visa Services</button></li>
+                <li><button onClick={() => scrollToSection('services')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Foreign Jobs</button></li>
+                <li><button onClick={() => scrollToSection('services')} className="text-gray-400 hover:text-white transition-colors cursor-pointer">Travel Consultancy</button></li>
               </ul>
             </div>
           </div>
@@ -799,3 +743,4 @@ const Landing: React.FC = () => {
 };
 
 export default Landing;
+
