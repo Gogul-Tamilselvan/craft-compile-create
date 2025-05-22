@@ -1,9 +1,8 @@
 
 import React from "react";
-import { TableIcon, FileTextIcon, FilesIcon, FileEditIcon } from "lucide-react";
+import { TableIcon, FileTextIcon, FilesIcon, FileEditIcon, BarChartIcon, BuildingIcon, FileInvoiceIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-type ModuleType = "table" | "resume" | "merger" | "cover-letter";
+import { ModuleType } from "@/types";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -17,6 +16,9 @@ const Layout: React.FC<LayoutProps> = ({
   setActiveModule 
 }) => {
   const modules = [
+    { id: "dashboard", name: "Dashboard", icon: <BarChartIcon className="w-5 h-5" /> },
+    { id: "expenses", name: "Expenses", icon: <BuildingIcon className="w-5 h-5" /> },
+    { id: "invoices", name: "Invoices", icon: <FileInvoiceIcon className="w-5 h-5" /> },
     { id: "table", name: "Table Editor", icon: <TableIcon className="w-5 h-5" /> },
     { id: "resume", name: "Resume Maker", icon: <FileTextIcon className="w-5 h-5" /> },
     { id: "merger", name: "Document Merger", icon: <FilesIcon className="w-5 h-5" /> },
@@ -28,7 +30,7 @@ const Layout: React.FC<LayoutProps> = ({
       <header className="bg-white border-b border-gray-200 shadow-sm">
         <div className="container mx-auto py-4 px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-blue-600">Document Management Suite</h1>
+            <h1 className="text-2xl font-bold text-blue-600">Financial Management Suite</h1>
           </div>
         </div>
       </header>
@@ -62,7 +64,7 @@ const Layout: React.FC<LayoutProps> = ({
       <footer className="bg-white border-t border-gray-200 py-4">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-center text-sm text-gray-500">
-            &copy; {new Date().getFullYear()} Document Management Suite. All rights reserved.
+            &copy; {new Date().getFullYear()} Financial Management Suite. All rights reserved.
           </p>
         </div>
       </footer>
