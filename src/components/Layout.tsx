@@ -1,6 +1,6 @@
 
 import React from "react";
-import { TableIcon, FileTextIcon, FilesIcon, FileEditIcon, BarChartIcon, BuildingIcon, FileInvoiceIcon } from "lucide-react";
+import { TableIcon, FileTextIcon, FilesIcon, FileEditIcon, BarChartIcon, BuildingIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ModuleType } from "@/types";
 
