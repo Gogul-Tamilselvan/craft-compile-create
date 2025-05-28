@@ -1,6 +1,5 @@
 
 import { Company, Expense, Invoice } from "@/types";
-import { v4 as uuidv4 } from "uuid";
 
 export const mockCompanies: Company[] = [
   {
@@ -156,9 +155,7 @@ export const mockInvoices: Invoice[] = [
   },
 ];
 
-export function generateUniqueId(): string {
-  return uuidv4();
-}
+
 
 export function getCompanyById(id: string): Company | undefined {
   return mockCompanies.find(company => company.id === id);
