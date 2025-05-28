@@ -851,7 +851,7 @@ const Footer = ({ scrollToSection }) => (
           &copy; {new Date().getFullYear()} Aasia Consultancy. All Rights Reserved.
         </p>
       </div>
-    </div>
+  
   </footer>
 );
 
