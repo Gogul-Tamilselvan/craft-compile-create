@@ -46,21 +46,21 @@ import { cn } from "@/lib/utils";
 
 const testimonials = [
   {
-    quote: "Aasia Consultancy made our international trip hassle-free. Their visa and flight booking services are excellent!",
+    quote: "Ticket booking-ku super fast service! Naan urgent-la flight ticket venum-nu sonna, within few minutes fix pannanga. Tension-e illa!”,
     name: "Ramesh Kumar",
-    location: "Chennai",
-    rating: 5
-  },
-  {
-    quote: "I got my passport renewed through Aasia in just 7 days. Their expertise in documentation saved me a lot of time!",
-    name: "Priya Sharma",
-    location: "Thanjavur",
-    rating: 5
-  },
-  {
-    quote: "The overseas job consultancy team helped me secure a position in Dubai. Very professional service!",
-    name: "Abdul Rahman",
     location: "Pattukottai",
+    rating: 5
+  },
+  {
+    quote: "Passport apply panna enga porathu nu theriyala, but inga contact pannapo full online process explain pannanga, super smooth-a apply pannitten!",
+    name: "Yazhini",
+    location: "Muthupet",
+    rating: 5
+  },
+  {
+    quote: "Family vacation-ku full ticketing, hotel, visa, passport – ellame orae edathula handle pannanga. Semma relaxed trip pannom!",
+    name: "Abdul Rahman",
+    location: "Mannargudi",
     rating: 5
   },
 ];
@@ -418,7 +418,7 @@ const AboutSection = () => (
                   <UsersIcon className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-900">15+ Expert Consultants</h4>
+                  <h4 className="font-semibold text-gray-900">Expert Consultant</h4>
                   <p className="text-sm text-gray-600">Dedicated professionals</p>
                 </div>
               </div>
@@ -719,14 +719,14 @@ const OwnerSection = () => (
               
               {/* Contact information with icons */}
               <div className="flex items-center gap-6">
-                <a href="tel:+919876543210" className="flex items-center gap-2 text-gray-700 hover:text-blue-700 transition-colors">
+                <a href="tel:+919659338227" className="flex items-center gap-2 text-gray-700 hover:text-blue-700 transition-colors">
                   <div className="bg-blue-100 p-2 rounded-full">
                     <PhoneIcon className="w-4 h-4 text-blue-700" />
                   </div>
-                  <span>+91 98765 43210</span>
+                  <span>+91 96593 38227</span>
                 </a>
                 
-                <a href="mailto:founder@aasiaconsultancy.com" className="flex items-center gap-2 text-gray-700 hover:text-blue-700 transition-colors">
+                <a href="mailto:aasiaconsultancy@gmail.com" className="flex items-center gap-2 text-gray-700 hover:text-blue-700 transition-colors">
                   <div className="bg-blue-100 p-2 rounded-full">
                     <InfoIcon className="w-4 h-4 text-blue-700" />
                   </div>
@@ -742,16 +742,17 @@ const OwnerSection = () => (
           <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Visit Our Office</h3>
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="w-full md:w-2/3 h-64 md:h-80 rounded-xl overflow-hidden shadow-lg">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15758.141134665786!2d79.3134068!3d10.4349715!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5532b3deaf51f3%3A0x7f48afb11d8b23d4!2sPattukottai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1621234567890!5m2!1sen!2sin"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen={false}
-                loading="lazy"
-                title="Aasia Consultancy Location"
-                className="grayscale"
-              ></iframe>
+             <iframe
+  src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15758.141134665786!2d79.31808065290409!3d10.422888418435537!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1621234567890!5m2!1sen!2sin"
+  width="100%"
+  height="100%"
+  style={{ border: 0 }}
+  allowFullScreen={false}
+  loading="lazy"
+  title="Aasia Consultancy Location"
+  className="grayscale"
+></iframe>
+
             </div>
             <div className="w-full md:w-1/3">
               <div className="flex items-start gap-4 mb-6">
@@ -760,7 +761,7 @@ const OwnerSection = () => (
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 text-lg">Our Address</h4>
-                  <p className="text-gray-600 mt-1">Aasia Consultancy,<br/>Main Street, Pattukottai,<br/>Tamil Nadu, India</p>
+                  <p className="text-gray-600 mt-1">Aasia Consultancy,<br/>170/27, 2nd Floor, Pallivasal Complex, Palaniyappan st, Pattukottai,<br/>Tamil Nadu, India</p>
                 </div>
               </div>
               
@@ -842,21 +843,7 @@ const Footer = ({ scrollToSection }) => (
                 </button>
               </li>
             ))}
-            <li>
-              <button onClick={() => scrollToSection('services')} className="text-blue-200/80 hover:text-white transition-colors flex items-center">
-                <ChevronRightIcon className="w-4 h-4 mr-2" />
-                <span>Visa Services</span>
-              </button>
-            </li>
-            <li>
-              <button onClick={() => scrollToSection('services')} className="text-blue-200/80 hover:text-white transition-colors flex items-center">
-                <ChevronRightIcon className="w-4 h-4 mr-2" />
-                <span>Overseas Jobs</span>
-              </button>
-            </li>
-          </ul>
-        </div>
-      </div>
+            <
       
       {/* Footer Bottom */}
       <div className="py-8 border-t border-white/10 text-center">
