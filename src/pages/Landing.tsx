@@ -843,7 +843,7 @@ const Footer = ({ scrollToSection }) => (
                 </button>
               </li>
             ))}
-            <
+            
       
       {/* Footer Bottom */}
       <div className="py-8 border-t border-white/10 text-center">
