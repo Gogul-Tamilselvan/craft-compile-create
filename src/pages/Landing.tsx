@@ -795,13 +795,12 @@ const Footer = ({ scrollToSection }) => (
             </div>
             <span className="font-bold text-2xl text-white">Aasia Consultancy</span>
           </div>
-          
           <p className="text-blue-200/80 mb-6 leading-relaxed">
             Your trusted travel partner in Pattukottai, providing comprehensive travel services since 2010. 
             We make your journey seamless from documentation to destination.
           </p>
         </div>
-        
+
         <div>
           <h3 className="text-xl font-semibold mb-6 text-white">Quick Links</h3>
           <ul className="space-y-3">
@@ -831,7 +830,7 @@ const Footer = ({ scrollToSection }) => (
             </li>
           </ul>
         </div>
-        
+
         <div>
           <h3 className="text-xl font-semibold mb-6 text-white">Services</h3>
           <ul className="space-y-3">
@@ -843,15 +842,17 @@ const Footer = ({ scrollToSection }) => (
                 </button>
               </li>
             ))}
-            
-      
+          </ul>
+        </div>
+      </div>
+
       {/* Footer Bottom */}
       <div className="py-8 border-t border-white/10 text-center">
         <p className="text-blue-200/80">
           &copy; {new Date().getFullYear()} Aasia Consultancy. All Rights Reserved.
         </p>
       </div>
-  
+    </div>
   </footer>
 );
 
