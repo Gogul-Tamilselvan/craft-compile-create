@@ -46,7 +46,7 @@ import { cn } from "@/lib/utils";
 
 const testimonials = [
   {
-    quote: "Ticket booking-ku super fast service! Naan urgent-la flight ticket venum-nu sonna, within few minutes fix pannanga. Tension-e illa!”,
+    quote: "Ticket booking-ku super fast service! Naan urgent-la flight ticket venum-nu sonna, within few minutes fix pannanga. Tension-e illa!",
     name: "Ramesh Kumar",
     location: "Pattukottai",
     rating: 5
