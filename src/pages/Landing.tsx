@@ -180,17 +180,7 @@ const Navigation = ({ isScrolled, visibleSections, scrollToSection, isMenuOpen, 
                   visibleSections[section] && "transform rotate-90"
                 )} />
               </button>
-            ))}<a
-  href="https://linkbloom1.vercel.app/profile/vyJAWt3cdAYfq6rkSGdkGXfV9yg2"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="mt-2"
->
-  <Button size="sm" className="w-full bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900">
-    Client Portal
-    <ChevronRightIcon className="ml-1 h-4 w-4" />
-  </Button>
-</a>
+            ))}
 
           </div>
         </div>
