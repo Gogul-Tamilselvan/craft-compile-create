@@ -1,47 +1,44 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-<!-- Primary Meta Tags -->
-<title>Aasia Consultancy | Best Travel Agency in Pattukkottai</title>
-<meta name="title" content="Aasia Consultancy | Best Travel Agency in Pattukkottai">
-<meta name="description" content="Aasia Consultancy in Pattukkottai offers flight booking, visa assistance, and travel support. Trusted, affordable, and professional travel services.">
+    <title>Aasia Consultancy | Best Travel Agency in Pattukkottai</title>
 
-<!-- Meta Keywords -->
-<meta name="keywords" content="Aasia Consultancy, travel agency Pattukkottai, flight booking Pattukkottai, visa services Pattukkottai, best travel agent Pattukkottai, ticket booking agency, international travel support, cheap flights from Pattukkottai, Pattukkottai tourist visa, travel documentation support, Pattukkottai air tickets, tour planning Pattukkottai, airline ticket agents, domestic flight booking, holiday packages Pattukkottai, visa consultancy Pattukkottai, student visa assistance, tourist visa agents, work visa consultant, Pattukkottai travel agency near bus stand, trusted travel consultant, Pattukkottai trip planner, online flight booking, air ticket agency in Pattukkottai">
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Aasia Consultancy | Best Travel Agency in Pattukkottai">
+    <meta name="description" content="Aasia Consultancy in Pattukkottai offers flight booking, visa assistance, and travel support. Trusted, affordable, and professional travel services.">
+    <meta name="keywords" content="Aasia Consultancy, travel agency Pattukkottai, flight booking Pattukkottai, visa services Pattukkottai, best travel agent Pattukkottai, ticket booking agency, international travel support, cheap flights from Pattukkottai, Pattukkottai tourist visa, travel documentation support, Pattukkottai air tickets, tour planning Pattukkottai, airline ticket agents, domestic flight booking, holiday packages Pattukkottai, visa consultancy Pattukkottai, student visa assistance, tourist visa agents, work visa consultant, Pattukkottai travel agency near bus stand, trusted travel consultant, Pattukkottai trip planner, online flight booking, air ticket agency in Pattukkottai">
 
-<!-- Canonical URL -->
-<link rel="canonical" href="https://aasiaconsultancy.vercel.app/">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://aasiaconsultancy.vercel.app/">
 
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://aasiaconsultancy.vercel.app/">
-<meta property="og:title" content="Aasia Consultancy | Best Travel Agency in Pattukkottai">
-<meta property="og:description" content="Aasia Consultancy in Pattukkottai offers flight booking, visa assistance, and travel support. Trusted, affordable, and professional travel services.">
-<meta property="og:image" content="https://aasiaconsultancy.vercel.app/assets/aasia-consultancy-cover.jpg"> <!-- Replace with your actual image URL -->
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aasiaconsultancy.vercel.app/">
+    <meta property="og:title" content="Aasia Consultancy | Best Travel Agency in Pattukkottai">
+    <meta property="og:description" content="Aasia Consultancy in Pattukkottai offers flight booking, visa assistance, and travel support. Trusted, affordable, and professional travel services.">
+    <meta property="og:image" content="https://aasiaconsultancy.vercel.app/assets/aasia-consultancy-cover.jpg">
 
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:url" content="https://aasiaconsultancy.vercel.app/">
-<meta name="twitter:title" content="Aasia Consultancy | Best Travel Agency in Pattukkottai">
-<meta name="twitter:description" content="Aasia Consultancy in Pattukkottai offers flight booking, visa assistance, and travel support. Trusted, affordable, and professional travel services.">
-<meta name="twitter:image" content="https://aasiaconsultancy.vercel.app/assets/aasia-consultancy-cover.jpg"> <!-- Replace with your actual image URL -->
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://aasiaconsultancy.vercel.app/">
+    <meta name="twitter:title" content="Aasia Consultancy | Best Travel Agency in Pattukkottai">
+    <meta name="twitter:description" content="Aasia Consultancy in Pattukkottai offers flight booking, visa assistance, and travel support. Trusted, affordable, and professional travel services.">
+    <meta name="twitter:image" content="https://aasiaconsultancy.vercel.app/assets/aasia-consultancy-cover.jpg">
 
-<!-- Favicon -->
-<link rel="icon" type="image/png" href="/favicon.png">
+    <!-- Favicon -->
 
-<!-- General Tags -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="index, follow">
-<meta name="author" content="Aasia Consultancy">    
+    <!-- General Tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Aasia Consultancy">    
+
     <!-- Preload critical assets -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://images.unsplash.com">
-    
-    <!-- Preload critical CSS -->
     <link rel="preload" href="/src/index.css" as="style">
-    
+    <link rel="stylesheet" href="/src/index.css">
+
     <style>
       @media print {
         @page {
@@ -52,14 +49,14 @@
           -webkit-print-color-adjust: exact;
         }
       }
-      
+
       /* Critical CSS for initial paint */
       body {
         margin: 0;
         padding: 0;
         font-family: system-ui, -apple-system, sans-serif;
       }
-      
+
       .loading {
         display: flex;
         align-items: center;
@@ -68,6 +65,7 @@
         width: 100%;
         background: linear-gradient(to bottom right, #1e3a8a, #1e40af);
         color: white;
+        font-size: 1.2rem;
       }
     </style>
   </head>
@@ -75,10 +73,11 @@
   <body>
     <div id="root">
       <!-- Minimal loading state to show while React loads -->
-      <div class="loading">
+      <div class="loading" role="status" aria-live="polite">
         <div>Loading Aasia Consultancy...</div>
       </div>
     </div>
+
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
